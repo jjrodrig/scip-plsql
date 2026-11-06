@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 )
 
 func TestSummarizeGroupsAndOrdersDiagnostics(t *testing.T) {

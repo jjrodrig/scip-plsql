@@ -8,7 +8,7 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/charmap"
 	textunicode "golang.org/x/text/encoding/unicode"

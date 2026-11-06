@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/jjrodrig/plsql-scip/internal/indexer"
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 )
 
 func TestCompareAcrossDocumentsAndRoles(t *testing.T) {

@@ -2,7 +2,7 @@
 
 package main
 
-import _ "github.com/sijms/go-ora/v2"
+import _ "github.com/sijms/go-ora/v3"
 
 func init() {
 	oracleIntegrationEnabled = true

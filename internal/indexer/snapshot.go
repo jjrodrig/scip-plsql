@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 )
 
 // CatalogSnapshot is an offline dictionary snapshot. Names are Oracle
@@ -188,7 +188,7 @@ func (s *state) mergeSnapshot(snap CatalogSnapshot) {
 				info.Documentation = []string{obj.Documentation}
 			}
 			if strings.EqualFold(obj.Kind, "procedure") || strings.EqualFold(obj.Kind, "function") {
-				info.SignatureDocumentation = &scip.Document{Text: snapshotSubprogramSignature(obj.Kind, obj.Name, obj.Parameters, obj.ReturnType)}
+				info.SignatureDocumentation = &scip.Signature{Text: snapshotSubprogramSignature(obj.Kind, obj.Name, obj.Parameters, obj.ReturnType)}
 			}
 			s.external[symbol] = info
 			if strings.EqualFold(obj.Kind, "synonym") {
@@ -253,7 +253,7 @@ func (s *state) mergeSnapshot(snap CatalogSnapshot) {
 			s.external[methodSym] = &scip.SymbolInformation{
 				Symbol: methodSym, DisplayName: member.Name, Kind: scip.SymbolInformation_Method,
 				EnclosingSymbol:        symbol,
-				SignatureDocumentation: &scip.Document{Text: snapshotSubprogramSignature(member.Kind, member.Name, member.Parameters, member.ReturnType)},
+				SignatureDocumentation: &scip.Signature{Text: snapshotSubprogramSignature(member.Kind, member.Name, member.Parameters, member.ReturnType)},
 			}
 		}
 	}

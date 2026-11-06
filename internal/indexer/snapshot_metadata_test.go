@@ -3,7 +3,7 @@ package indexer
 import (
 	"testing"
 
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 )
 
 func TestSnapshotFunctionMetadataIncludesReturnTypesAndParents(t *testing.T) {

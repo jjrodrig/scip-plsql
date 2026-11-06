@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/bytebase/omni/oracle/ast"
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 )
 
 func TestDeclarationSignatureAndDocumentation(t *testing.T) {

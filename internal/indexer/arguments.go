@@ -2,7 +2,7 @@ package indexer
 
 import (
 	"github.com/bytebase/omni/oracle/ast"
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 )
 
 // argumentCandidates uses the same catalog and overload filter as call

@@ -14,7 +14,7 @@ import (
 
 	"github.com/bytebase/omni/oracle/ast"
 	"github.com/bytebase/omni/oracle/parser"
-	"github.com/sourcegraph/scip/bindings/go/scip"
+	"github.com/scip-code/scip/bindings/go/scip"
 	"google.golang.org/protobuf/encoding/protowire"
 	"google.golang.org/protobuf/proto"
 )
@@ -586,7 +586,7 @@ func add(src *source, d decl) {
 		}
 		info.EnclosingSymbol = metadata.enclosingSymbol
 		if metadata.signature != "" {
-			info.SignatureDocumentation = &scip.Document{Text: metadata.signature}
+			info.SignatureDocumentation = &scip.Signature{Text: metadata.signature}
 		}
 		if metadata.documentation != "" {
 			info.Documentation = []string{metadata.documentation}
