@@ -2,6 +2,12 @@
 
 `scip-plsql` indexes Oracle PL/SQL source files and writes a [SCIP](https://github.com/sourcegraph/scip) index for code navigation and analysis. It is an early-stage project: supported syntax is useful for real repositories, but the design's coverage and performance targets are not fully verified.
 
+## License
+
+This project is licensed under the GNU Affero General Public License, version 3.0
+only (AGPL-3.0-only). See [LICENSE](LICENSE) for the full text. Third-party
+dependencies retain their own licenses.
+
 ## Requirements
 
 - Go 1.27.0 or later
