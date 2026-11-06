@@ -213,6 +213,30 @@ func sqlPlusRemark(text string, i int) (int, bool) {
 func isSubName(c byte) bool {
 	return c == '_' || c == '$' || c == '#' || c >= '0' && c <= '9' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z'
 }
+
+// Only substitutions actually rewritten by preprocess are reported: quoted
+// text, REM lines, comments and inactive branches remain untouched or masked.
+func unresolvedSubstitutions(original, processed string) []preprocessDiagnostic {
+	var result []preprocessDiagnostic
+	for i := 0; i < len(original) && i < len(processed); i++ {
+		if original[i] != '&' || processed[i] != 'x' {
+			continue
+		}
+		j := i + 1
+		if j < len(original) && original[j] == '&' {
+			j++
+		}
+		start := j
+		for j < len(original) && isSubName(original[j]) {
+			j++
+		}
+		if j > start {
+			result = append(result, preprocessDiagnostic{i, j, "Variable SQL*Plus sin valor: " + original[i:j]})
+			i = j - 1
+		}
+	}
+	return result
+}
 func directiveAt(text string, i int) (string, int) {
 	j := i + 1
 	for j < len(text) && (text[j] >= 'a' && text[j] <= 'z' || text[j] >= 'A' && text[j] <= 'Z') {

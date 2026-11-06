@@ -168,3 +168,43 @@ func TestMiningFeatureAliasIsNotResolvedAsColumn(t *testing.T) {
 		t.Fatalf("id reference=%v alias incorrectly resolved=%v", idRef, aliasRef)
 	}
 }
+
+func TestMiningQualifiedWildcardAndExpressionArguments(t *testing.T) {
+	input := "SELECT cluster_details(m, t.cluster_id, 5 USING t.*), cluster_set(m, NULL, 0.2 USING *), cluster_distance(m USING *) FROM tab t;"
+	out, ds := preprocessMining(input)
+	if len(out) != len(input) || len(ds) != 3 {
+		t.Fatalf("output=%q diagnostics=%v", out, ds)
+	}
+	if _, err := parseRange(out, 0, len(out)); err != nil {
+		t.Fatalf("%v: %s", err, out)
+	}
+}
+
+func TestMiningQualifiedArgumentsKeepColumnReferences(t *testing.T) {
+	root := t.TempDir()
+	sql := "CREATE TABLE emp (cluster_id NUMBER);\nSELECT cluster_details(m, t.cluster_id, 5 USING t.*) FROM emp t;\n"
+	if err := os.WriteFile(filepath.Join(root, "a.sql"), []byte(sql), 0600); err != nil {
+		t.Fatal(err)
+	}
+	var metrics Metrics
+	if err := Index(Options{Root: root, Output: "index.scip", Database: "demo", Version: "1", Schema: "HR", Metrics: &metrics}); err != nil {
+		t.Fatal(err)
+	}
+	if metrics.DegradedUnits != 0 {
+		t.Fatalf("degraded: %+v", metrics)
+	}
+	b, err := os.ReadFile(filepath.Join(root, "index.scip"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var idx scip.Index
+	if err := proto.Unmarshal(b, &idx); err != nil {
+		t.Fatal(err)
+	}
+	for _, o := range idx.Documents[0].Occurrences {
+		if len(o.Range) > 0 && o.Range[0] == 1 && o.Symbol == "scip-plsql oracle demo 1 HR/EMP#CLUSTER_ID." {
+			return
+		}
+	}
+	t.Fatal("missing qualified argument reference")
+}

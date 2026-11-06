@@ -53,6 +53,7 @@ type source struct {
 	lineStarts              []int
 	offsetMap               []int
 	preprocessorDiagnostics []preprocessDiagnostic
+	substitutionDiagnostics []preprocessDiagnostic
 	miningDiagnostics       []preprocessDiagnostic
 	schemaDiagnostics       []preprocessDiagnostic
 	encodingDiagnostics     []preprocessDiagnostic
@@ -197,6 +198,7 @@ func Index(o Options) error {
 			}
 		}
 		processed, diagnostics := preprocess(src.text, o.CCFlags)
+		src.substitutionDiagnostics = unresolvedSubstitutions(src.text, processed)
 		processed, src.miningDiagnostics = preprocessMining(processed)
 		if decoded.utf8BOM {
 			processed = "   " + processed[3:]
@@ -416,6 +418,9 @@ func (s *state) declarations(src *source) {
 	}
 	for _, d := range src.preprocessorDiagnostics {
 		src.doc.Occurrences = append(src.doc.Occurrences, &scip.Occurrence{Range: src.rng(d.start, d.end), Diagnostics: []*scip.Diagnostic{{Severity: scip.Severity_Warning, Code: "conditional-compilation", Source: "scip-plsql", Message: d.message}}})
+	}
+	for _, d := range src.substitutionDiagnostics {
+		src.addDiagnostic(d.start, d.end, &scip.Diagnostic{Severity: scip.Severity_Warning, Code: "substitution-unresolved", Source: "scip-plsql", Message: d.message})
 	}
 	for _, d := range src.miningDiagnostics {
 		src.addDiagnostic(d.start, d.end, &scip.Diagnostic{Severity: scip.Severity_Warning, Code: "mining-model-unresolved", Source: "scip-plsql", Message: d.message})

@@ -13,7 +13,7 @@ const miningQualified = miningIdentifier + `(?:\s*\.\s*` + miningIdentifier + `)
 const miningLiteral = `(?:[0-9]+(?:\.[0-9]+)?|'(?:[^']|'')*')`
 const miningFeature = `(?:` + miningQualified + `|` + miningLiteral + `)(?:\s+AS\s+` + miningIdentifier + `)?`
 
-var miningWildcard = regexp.MustCompile(`(?i)^(PREDICTION|PREDICTION_PROBABILITY|PREDICTION_DETAILS|PREDICTION_SET|PREDICTION_COST|PREDICTION_BOUNDS|CLUSTER_ID|CLUSTER_PROBABILITY|CLUSTER_DETAILS|FEATURE_ID|FEATURE_VALUE|FEATURE_DETAILS)\s*\(\s*((?:OF\s+ANOMALY|` + miningQualified + `))(?:\s+COST\s+MODEL)?\s*(?:,\s*` + miningLiteral + `){0,2}(?:\s+COST\s+MODEL)?\s+(USING)\s*(?:\*|` + miningFeature + `(?:\s*,\s*` + miningFeature + `)*)\s*\)`)
+var miningWildcard = regexp.MustCompile(`(?i)^(PREDICTION|PREDICTION_PROBABILITY|PREDICTION_DETAILS|PREDICTION_SET|PREDICTION_COST|PREDICTION_BOUNDS|CLUSTER_ID|CLUSTER_PROBABILITY|CLUSTER_DETAILS|CLUSTER_DISTANCE|CLUSTER_SET|FEATURE_ID|FEATURE_VALUE|FEATURE_DETAILS|FEATURE_SET)\s*\(\s*((?:OF\s+ANOMALY|` + miningQualified + `))(?:\s+COST\s+MODEL)?\s*(?:,\s*(?:` + miningLiteral + `|` + miningQualified + `)){0,2}(?:\s+COST\s+MODEL)?\s+(USING)\s*(?:\*|` + miningIdentifier + `\s*\.\s*\*|` + miningFeature + `(?:\s*,\s*` + miningFeature + `)*)\s*\)`)
 var miningAlias = regexp.MustCompile(`(?i)^AS\s+` + miningIdentifier)
 var miningCost = regexp.MustCompile(`(?i)^COST\s+MODEL\b`)
 

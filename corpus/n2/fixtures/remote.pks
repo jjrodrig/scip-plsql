@@ -1,0 +1,4 @@
+CREATE OR REPLACE PACKAGE n2_ext.n2_remote AS
+  PROCEDURE ping(p_id NUMBER);
+END;
+/

@@ -1,0 +1,7 @@
+CREATE OR REPLACE PACKAGE BODY n2_ext.n2_remote AS
+  PROCEDURE ping(p_id NUMBER) IS
+  BEGIN
+    NULL;
+  END;
+END;
+/

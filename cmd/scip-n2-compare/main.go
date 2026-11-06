@@ -35,10 +35,20 @@ type roleExpectation struct {
 	Name     string `json:"name"`
 	Role     string `json:"role"`
 }
+type manualExpectation struct {
+	Document       string `json:"document"`
+	Line           int64  `json:"line"`
+	Column         int64  `json:"column"`
+	Name           string `json:"name"`
+	Symbol         string `json:"symbol"`
+	Role           string `json:"role"`
+	TypeDefinition string `json:"type_definition,omitempty"`
+}
 type manifest struct {
-	Entries  []entry           `json:"entries"`
-	Bindings []binding         `json:"bindings"`
-	Roles    []roleExpectation `json:"roles"`
+	Entries  []entry             `json:"entries"`
+	Bindings []binding           `json:"bindings"`
+	Roles    []roleExpectation   `json:"roles"`
+	Manual   []manualExpectation `json:"manual"`
 }
 type resultItem struct {
 	Document   string `json:"document"`
@@ -56,6 +66,7 @@ type report struct {
 	Counts map[string]int `json:"counts"`
 	Roles  map[string]int `json:"roles"`
 	Items  []resultItem   `json:"items"`
+	Manual []resultItem   `json:"manual,omitempty"`
 }
 type input struct {
 	entry  entry
@@ -144,6 +155,14 @@ func compare(inputs []input, bindings []binding, expectedRoles []roleExpectation
 						match = o
 						status = "matched"
 						break
+					}
+				}
+				if match != nil {
+					for _, o := range found {
+						if o.Symbol != target {
+							status = "ambiguous"
+							break
+						}
 					}
 				}
 				if match == nil && len(found) > 0 {
@@ -241,7 +260,52 @@ func main() {
 	}
 	enc := json.NewEncoder(os.Stdout)
 	enc.SetIndent("", "  ")
-	if e := enc.Encode(compare(inputs, m.Bindings, m.Roles)); e != nil {
+	result := compare(inputs, m.Bindings, m.Roles)
+	for _, expectation := range m.Manual {
+		status := "source_mismatch"
+		for _, in := range inputs {
+			if in.entry.Document != expectation.Document {
+				continue
+			}
+			found, ok := occurrences(in, indexer.PLScopeIdentifier{Name: expectation.Name, Line: expectation.Line, Column: expectation.Column})
+			if !ok {
+				break
+			}
+			status = "missing"
+			for _, o := range found {
+				if o.Symbol != expectation.Symbol {
+					continue
+				}
+				mask := scip.SymbolRole_ReadAccess
+				switch expectation.Role {
+				case "write":
+					mask = scip.SymbolRole_WriteAccess
+				case "definition":
+					mask = scip.SymbolRole_Definition
+				}
+				status = "role_mismatch"
+				if o.SymbolRoles&int32(mask) != 0 {
+					status = "matched"
+				}
+				if status == "matched" && expectation.TypeDefinition != "" {
+					status = "relation_missing"
+					for _, info := range in.doc.Symbols {
+						if info.Symbol == o.Symbol {
+							for _, rel := range info.Relationships {
+								if rel.Symbol == expectation.TypeDefinition && rel.IsTypeDefinition {
+									status = "matched"
+								}
+							}
+						}
+					}
+				}
+				break
+			}
+			break
+		}
+		result.Manual = append(result.Manual, resultItem{Document: expectation.Document, Name: expectation.Name, Line: expectation.Line, Column: expectation.Column, Status: status, Role: expectation.Role, RoleSource: "fixture", Expected: expectation.Symbol})
+	}
+	if e := enc.Encode(result); e != nil {
 		fmt.Fprintln(os.Stderr, e)
 		os.Exit(1)
 	}

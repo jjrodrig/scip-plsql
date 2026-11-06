@@ -35,3 +35,11 @@ func TestExplicitAnchorDetectsIncorrectDeclaration(t *testing.T) {
 		t.Fatalf("unexpected report: %+v", got)
 	}
 }
+
+func TestCompareReportsAmbiguousCandidates(t *testing.T) {
+	in := input{entry: entry{Document: "call", ObjectType: "PROCEDURE"}, source: "proc\n", doc: &scip.Document{Occurrences: []*scip.Occurrence{{Range: []int32{0, 0, 4}, Symbol: "expected", SymbolRoles: int32(scip.SymbolRole_ReadAccess)}, {Range: []int32{0, 0, 4}, Symbol: "other", SymbolRoles: int32(scip.SymbolRole_ReadAccess)}}}, rows: []indexer.PLScopeIdentifier{{Name: "PROC", Type: "PROCEDURE", Signature: "s", Usage: "CALL", ObjectType: "PROCEDURE", Line: 1, Column: 1}}}
+	r := compare([]input{in}, []binding{{Name: "PROC", Type: "PROCEDURE", Symbol: "expected"}}, nil)
+	if r.Counts["ambiguous"] != 1 || r.Counts["matched"] != 0 {
+		t.Fatalf("unexpected report: %+v", r)
+	}
+}

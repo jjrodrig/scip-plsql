@@ -67,6 +67,44 @@ SELECT '&literal', q'[&quoted $IF $$x $THEN]', "&identifier", &first, &&second F
 	}
 }
 
+func TestUnresolvedSubstitutionsExcludeCommentsAndInactiveBranches(t *testing.T) {
+	input := "-- &comment\nREM &remark\nSELECT '&literal', &&active FROM dual;\n$IF $$enabled $THEN\nSELECT &inactive FROM dual;\n$END\n"
+	processed, _ := preprocess(input, map[string]string{"enabled": "false"})
+	got := unresolvedSubstitutions(input, processed)
+	if len(got) != 1 || input[got[0].start:got[0].end] != "&&active" {
+		t.Fatalf("diagnostics: %+v", got)
+	}
+}
+
+func TestUnknownSynonymModifierRetainsDiagnostic(t *testing.T) {
+	root := t.TempDir()
+	sql := "CREATE &action_type. SYNONYM hr.alias FOR hr.target;\n"
+	if err := os.WriteFile(filepath.Join(root, "a.sql"), []byte(sql), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := Index(Options{Root: root, Output: "index.scip", Database: "demo", Version: "1", Schema: "HR"}); err != nil {
+		t.Fatal(err)
+	}
+	b, err := os.ReadFile(filepath.Join(root, "index.scip"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var idx scip.Index
+	if err := proto.Unmarshal(b, &idx); err != nil {
+		t.Fatal(err)
+	}
+	var warning, parseError bool
+	for _, o := range idx.Documents[0].Occurrences {
+		for _, d := range o.Diagnostics {
+			warning = warning || d.Code == "substitution-unresolved"
+			parseError = parseError || d.Code == "parse-error"
+		}
+	}
+	if !warning || !parseError {
+		t.Fatalf("substitution warning=%v parse error=%v", warning, parseError)
+	}
+}
+
 func TestSQLPlusContinuationAndSubstitutionDelimiter(t *testing.T) {
 	input := "INSERT INTO &owner..products VALUES(1-\n,'a-'||-\n'b');\n-- comment -\nSELECT q'[literal-\nvalue]' FROM dual;\nSELECT &part.suffix FROM dual;\n"
 	want := "INSERT INTO xowner .products VALUES(1 \n,'a-'|| \n'b');\n-- comment -\nSELECT q'[literal-\nvalue]' FROM dual;\nSELECT xpartxsuffix FROM dual;\n"
@@ -323,16 +361,20 @@ func TestIndexSubstitutionPreservesFollowingReference(t *testing.T) {
 	if err := proto.Unmarshal(b, &idx); err != nil {
 		t.Fatal(err)
 	}
-	found := false
+	found, warned := false, false
 	for _, o := range idx.Documents[0].Occurrences {
-		if len(o.Diagnostics) > 0 {
-			t.Errorf("unexpected diagnostic: %v", o.Diagnostics)
+		for _, d := range o.Diagnostics {
+			if d.Code == "substitution-unresolved" {
+				warned = true
+			} else {
+				t.Errorf("unexpected diagnostic: %v", d)
+			}
 		}
 		if o.Range[0] == 1 && o.Range[1] == 28 && o.Symbol == "scip-plsql oracle demo 1 HR/EMP#" {
 			found = true
 		}
 	}
-	if !found {
-		t.Fatal("missing reference after substitution")
+	if !found || !warned {
+		t.Fatalf("reference=%v unresolved substitution diagnostic=%v", found, warned)
 	}
 }

@@ -1,0 +1,6179 @@
+{
+  "repositories": {
+    "Logger": {
+      "measurement": {
+        "label": "Logger",
+        "revision": "600f0c44cd0cc7f064776d31de50e9006d3476c4",
+        "utc": "2026-11-06T13:28:48.583499+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.046581604998209514,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "29",
+              "Invalid": "0",
+              "Writes": "29",
+              "Files": "29",
+              "Lines of code": "5961",
+              "Compilation units": "82",
+              "Parsed units": "77",
+              "Degraded units": "5",
+              "Resolved references": "605",
+              "Parse time": "4ms",
+              "Total time": "43ms",
+              "Throughput": "137345 LOC/s",
+              "Peak sampled heap": "2.2 MiB"
+            },
+            "index_sha256": "294fdc62a6d5975b5940a8d767b6d2cd5ba29763867e6a0ff256bae0b64de37c",
+            "index_bytes": 117513
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.035924797994084656,
+            "metrics": {
+              "Hits": "29",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "29",
+              "Lines of code": "5961",
+              "Compilation units": "82",
+              "Parsed units": "77",
+              "Degraded units": "5",
+              "Resolved references": "605",
+              "Parse time": "4ms",
+              "Total time": "33ms",
+              "Throughput": "182139 LOC/s",
+              "Peak sampled heap": "2.2 MiB"
+            },
+            "index_sha256": "294fdc62a6d5975b5940a8d767b6d2cd5ba29763867e6a0ff256bae0b64de37c",
+            "index_bytes": 117513
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$NO_OP",
+          "count": 54,
+          "examples": [
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 132
+            },
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 164
+            },
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 216
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-unsupported",
+          "message": "El SQL dinámico literal se parseó, pero su tipo de sentencia no está soportado",
+          "count": 15,
+          "examples": [
+            {
+              "path": "source/packages/logger_test.pkb",
+              "line": 44
+            },
+            {
+              "path": "source/packages/logger_test.pkb",
+              "line": 51
+            },
+            {
+              "path": "source/packages/logger_test.pkb",
+              "line": 93
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-opaque",
+          "message": "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales",
+          "count": 11,
+          "examples": [
+            {
+              "path": "source/contexts/logger_context.sql",
+              "line": 5
+            },
+            {
+              "path": "source/packages/logger_test.pkb",
+              "line": 841
+            },
+            {
+              "path": "source/procedures/logger_configure.plb",
+              "line": 141
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$LOGGER_DEBUG",
+          "count": 9,
+          "examples": [
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 457
+            },
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 719
+            },
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 729
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &from_user",
+          "count": 8,
+          "examples": [
+            {
+              "path": "source/scripts/create_logger_synonyms.sql",
+              "line": 10
+            },
+            {
+              "path": "source/scripts/create_logger_synonyms.sql",
+              "line": 11
+            },
+            {
+              "path": "source/scripts/create_logger_synonyms.sql",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &to_user",
+          "count": 8,
+          "examples": [
+            {
+              "path": "source/scripts/grant_logger_to_user.sql",
+              "line": 10
+            },
+            {
+              "path": "source/scripts/grant_logger_to_user.sql",
+              "line": 11
+            },
+            {
+              "path": "source/scripts/grant_logger_to_user.sql",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &LOGGER_USER",
+          "count": 6,
+          "examples": [
+            {
+              "path": "source/install/create_user.sql",
+              "line": 28
+            },
+            {
+              "path": "source/install/create_user.sql",
+              "line": 38
+            },
+            {
+              "path": "source/install/create_user.sql",
+              "line": 41
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$LOGGER_NO_OP_INSTALL",
+          "count": 5,
+          "examples": [
+            {
+              "path": "source/tables/logger_logs.sql",
+              "line": 93
+            },
+            {
+              "path": "source/tables/logger_logs_apex_items.sql",
+              "line": 32
+            },
+            {
+              "path": "source/tables/logger_logs_apex_items.sql",
+              "line": 70
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "carácter condicional no soportado: '.'",
+          "count": 4,
+          "examples": [
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 491
+            },
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 936
+            },
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 1941
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"end\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 1
+            },
+            {
+              "path": "source/tables/logger_logs_apex_items.sql",
+              "line": 66
+            },
+            {
+              "path": "source/tables/logger_prefs.sql",
+              "line": 58
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &LOGGER_TABLESPACE",
+          "count": 3,
+          "examples": [
+            {
+              "path": "source/install/create_user.sql",
+              "line": 31
+            },
+            {
+              "path": "source/install/create_user.sql",
+              "line": 38
+            },
+            {
+              "path": "source/install/create_user.sql",
+              "line": 41
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &TEMP_TABLESPACE",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/install/create_user.sql",
+              "line": 34
+            },
+            {
+              "path": "source/install/create_user.sql",
+              "line": 38
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$RAC_LT_11_2",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/packages/logger.pkb",
+              "line": 448
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"/\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/install/create_user.sql",
+              "line": 44
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &param_iterations",
+          "count": 1,
+          "examples": [
+            {
+              "path": "tests/logger_log_load_test.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &param_text_size",
+          "count": 1,
+          "examples": [
+            {
+              "path": "tests/logger_log_load_test.sql",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &PASSWD",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/install/create_user.sql",
+              "line": 38
+            }
+          ]
+        }
+      ]
+    },
+    "OOS-Utils": {
+      "measurement": {
+        "label": "OOS-Utils",
+        "revision": "b6217292bc744211eaee9e1d11ca7a0b495bc44d",
+        "utc": "2026-11-06T13:28:49.241397+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.10678638800163753,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "32",
+              "Invalid": "0",
+              "Writes": "32",
+              "Files": "32",
+              "Lines of code": "14273",
+              "Compilation units": "91",
+              "Parsed units": "87",
+              "Degraded units": "4",
+              "Resolved references": "1398",
+              "Parse time": "14ms",
+              "Total time": "102ms",
+              "Throughput": "140122 LOC/s",
+              "Peak sampled heap": "7.8 MiB"
+            },
+            "index_sha256": "1e98412c16078026de8aef920f5e533b239bdabeb649bba52dc37cb257fe4045",
+            "index_bytes": 332543
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.09344065199547913,
+            "metrics": {
+              "Hits": "32",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "32",
+              "Lines of code": "14273",
+              "Compilation units": "91",
+              "Parsed units": "87",
+              "Degraded units": "4",
+              "Resolved references": "1398",
+              "Parse time": "16ms",
+              "Total time": "89ms",
+              "Throughput": "160945 LOC/s",
+              "Peak sampled heap": "13.9 MiB"
+            },
+            "index_sha256": "1e98412c16078026de8aef920f5e533b239bdabeb649bba52dc37cb257fe4045",
+            "index_bytes": 332543
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "dynamic-sql-opaque",
+          "message": "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales",
+          "count": 15,
+          "examples": [
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 103
+            },
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 5515
+            },
+            {
+              "path": "source/future/reusable_table_create_template.sql",
+              "line": 94
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "carácter condicional no soportado: '.'",
+          "count": 14,
+          "examples": [
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 380
+            },
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 460
+            },
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 3367
+            }
+          ]
+        },
+        {
+          "code": "ambiguous-overload",
+          "message": "La llamada coincide con varias sobrecargas",
+          "count": 12,
+          "examples": [
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 4711
+            },
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 4711
+            },
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 4745
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &from_user",
+          "count": 10,
+          "examples": [
+            {
+              "path": "install/create_synonyms.sql",
+              "line": 13
+            },
+            {
+              "path": "install/create_synonyms.sql",
+              "line": 14
+            },
+            {
+              "path": "install/create_synonyms.sql",
+              "line": 15
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &to_user",
+          "count": 10,
+          "examples": [
+            {
+              "path": "install/grant_to_oos_utils.sql",
+              "line": 13
+            },
+            {
+              "path": "install/grant_to_oos_utils.sql",
+              "line": 14
+            },
+            {
+              "path": "install/grant_to_oos_utils.sql",
+              "line": 15
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$OOS_UTIL_DEBUG",
+          "count": 2,
+          "examples": [
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 188
+            },
+            {
+              "path": "source/packages/oos_util.pkb",
+              "line": 26
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"end\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 163
+            },
+            {
+              "path": "source/packages/oos_util.pkb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"when\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "install/oos_utils_install.sql",
+              "line": 1146
+            },
+            {
+              "path": "source/packages/oos_util_crypto.pkb",
+              "line": 1
+            }
+          ]
+        }
+      ]
+    },
+    "console": {
+      "measurement": {
+        "label": "console",
+        "revision": "72ff8f8508feb76f4496bfacd4aa6f001cf97e02",
+        "utc": "2026-11-06T13:28:48.740610+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.11947580999549245,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "43",
+              "Invalid": "0",
+              "Writes": "43",
+              "Files": "43",
+              "Lines of code": "20374",
+              "Compilation units": "143",
+              "Parsed units": "134",
+              "Degraded units": "9",
+              "Resolved references": "4685",
+              "Parse time": "12ms",
+              "Total time": "115ms",
+              "Throughput": "176754 LOC/s",
+              "Peak sampled heap": "6.9 MiB"
+            },
+            "index_sha256": "c630788a0dcabded2e145d7ebc999b4b5c5ba2bd040b9133b914822c55ab3f68",
+            "index_bytes": 1011006
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.09496595199743751,
+            "metrics": {
+              "Hits": "43",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "43",
+              "Lines of code": "20374",
+              "Compilation units": "143",
+              "Parsed units": "134",
+              "Degraded units": "9",
+              "Resolved references": "4685",
+              "Parse time": "12ms",
+              "Total time": "90ms",
+              "Throughput": "226899 LOC/s",
+              "Peak sampled heap": "6.6 MiB"
+            },
+            "index_sha256": "c630788a0dcabded2e145d7ebc999b4b5c5ba2bd040b9133b914822c55ab3f68",
+            "index_bytes": 1011006
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "ambiguous-overload",
+          "message": "La llamada coincide con varias sobrecargas",
+          "count": 2156,
+          "examples": [
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 6519
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 6519
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 6519
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-opaque",
+          "message": "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales",
+          "count": 17,
+          "examples": [
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 34
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 108
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 6854
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-unsupported",
+          "message": "El SQL dinámico literal se parseó, pero su tipo de sentencia no está soportado",
+          "count": 11,
+          "examples": [
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 23
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 24
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 25
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$APEX_INSTALLED",
+          "count": 6,
+          "examples": [
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 1382
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 3954
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 5318
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$UTILS_PUBLIC",
+          "count": 4,
+          "examples": [
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 2433
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 2617
+            },
+            {
+              "path": "sources/CONSOLE.pkb",
+              "line": 88
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"-\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 47
+            },
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 120
+            },
+            {
+              "path": "sources/CONSOLE_CONF.sql",
+              "line": 7
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"#\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "sources/apex_plugin_template.sql",
+              "line": 27
+            },
+            {
+              "path": "sources/apex_plugin_template.sql",
+              "line": 45
+            },
+            {
+              "path": "sources/apex_plugin_template.sql",
+              "line": 58
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"end\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "sources/apex_plugin_template.sql",
+              "line": 55
+            },
+            {
+              "path": "sources/apex_plugin_template.sql",
+              "line": 68
+            },
+            {
+              "path": "sources/apex_plugin_template.sql",
+              "line": 81
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"default\": expected ';' after the previous statement (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "install/create_console_objects.sql",
+              "line": 2530
+            },
+            {
+              "path": "sources/CONSOLE.pkb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &1",
+          "count": 2,
+          "examples": [
+            {
+              "path": "tests/run.sql",
+              "line": 5
+            },
+            {
+              "path": "tests/run_args.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &CONNECT_STRING",
+          "count": 2,
+          "examples": [
+            {
+              "path": "tests/run.sql",
+              "line": 12
+            },
+            {
+              "path": "tests/run_args.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &SCRIPT",
+          "count": 2,
+          "examples": [
+            {
+              "path": "tests/run.sql",
+              "line": 18
+            },
+            {
+              "path": "tests/run_args.sql",
+              "line": 19
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &2",
+          "count": 1,
+          "examples": [
+            {
+              "path": "tests/run_args.sql",
+              "line": 6
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &ARGS",
+          "count": 1,
+          "examples": [
+            {
+              "path": "tests/run_args.sql",
+              "line": 19
+            }
+          ]
+        }
+      ]
+    },
+    "db-sample-schemas": {
+      "measurement": {
+        "label": "db-sample-schemas",
+        "revision": "6660bad68c07bd143430ace58565b3f727e17263",
+        "utc": "2026-11-06T13:28:46.233917+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.7091713269983302,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "89",
+              "Invalid": "0",
+              "Writes": "89",
+              "Files": "89",
+              "Lines of code": "119327",
+              "Compilation units": "12831",
+              "Parsed units": "12790",
+              "Degraded units": "41",
+              "Resolved references": "58504",
+              "Parse time": "106ms",
+              "Total time": "699ms",
+              "Throughput": "170732 LOC/s",
+              "Peak sampled heap": "99.5 MiB"
+            },
+            "index_sha256": "5f896a72ea26fb62139cd9dcc3be7c4e8b90d7e3a64662509fe3f3547f33e7d5",
+            "index_bytes": 4055276
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.5266331039965735,
+            "metrics": {
+              "Hits": "89",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "89",
+              "Lines of code": "119327",
+              "Compilation units": "12831",
+              "Parsed units": "12790",
+              "Degraded units": "41",
+              "Resolved references": "58504",
+              "Parse time": "104ms",
+              "Total time": "516ms",
+              "Throughput": "231444 LOC/s",
+              "Peak sampled heap": "83.1 MiB"
+            },
+            "index_sha256": "5f896a72ea26fb62139cd9dcc3be7c4e8b90d7e3a64662509fe3f3547f33e7d5",
+            "index_bytes": 4055276
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &connect_string",
+          "count": 20,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 365
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 66
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 78
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"FROM\" (SQLSTATE 42601)",
+          "count": 18,
+          "examples": [
+            {
+              "path": "order_entry/oc_popul.sql",
+              "line": 40
+            },
+            {
+              "path": "order_entry/oc_popul.sql",
+              "line": 46
+            },
+            {
+              "path": "order_entry/oc_popul.sql",
+              "line": 52
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &vrs",
+          "count": 18,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 101
+            },
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 121
+            },
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 172
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &vscript",
+          "count": 14,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 103
+            },
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 123
+            },
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 174
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &1",
+          "count": 10,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 58
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 53
+            },
+            {
+              "path": "order_entry/createUser.sql",
+              "line": 51
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &tbs",
+          "count": 10,
+          "examples": [
+            {
+              "path": "customer_orders/co_install.sql",
+              "line": 156
+            },
+            {
+              "path": "customer_orders/co_install.sql",
+              "line": 157
+            },
+            {
+              "path": "human_resources/hr_install.sql",
+              "line": 155
+            }
+          ]
+        },
+        {
+          "code": "ambiguous-overload",
+          "message": "La llamada coincide con varias sobrecargas",
+          "count": 8,
+          "examples": [
+            {
+              "path": "order_entry/xdbUtilities.sql",
+              "line": 310
+            },
+            {
+              "path": "order_entry/xdbUtilities.sql",
+              "line": 310
+            },
+            {
+              "path": "order_entry/xdbUtilities.sql",
+              "line": 320
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"OF\" (SQLSTATE 42601)",
+          "count": 8,
+          "examples": [
+            {
+              "path": "order_entry/oc_cre.sql",
+              "line": 221
+            },
+            {
+              "path": "order_entry/oc_cre.sql",
+              "line": 236
+            },
+            {
+              "path": "order_entry/oc_cre.sql",
+              "line": 246
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &2",
+          "count": 8,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 61
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 56
+            },
+            {
+              "path": "order_entry/createUser.sql",
+              "line": 54
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pass_sys",
+          "count": 8,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 365
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 66
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 78
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &3",
+          "count": 7,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 64
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 59
+            },
+            {
+              "path": "order_entry/createUser.sql",
+              "line": 57
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pass",
+          "count": 7,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 113
+            },
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 149
+            },
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 158
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-unsupported",
+          "message": "El SQL dinámico literal se parseó, pero su tipo de sentencia no está soportado",
+          "count": 6,
+          "examples": [
+            {
+              "path": "customer_orders/co_install.sql",
+              "line": 140
+            },
+            {
+              "path": "customer_orders/co_uninstall.sql",
+              "line": 68
+            },
+            {
+              "path": "human_resources/hr_install.sql",
+              "line": 139
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &4",
+          "count": 5,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 67
+            },
+            {
+              "path": "order_entry/loe_v3.sql",
+              "line": 57
+            },
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 76
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pass_oe",
+          "count": 5,
+          "examples": [
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 78
+            },
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 82
+            },
+            {
+              "path": "order_entry/createUser.sql",
+              "line": 78
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-opaque",
+          "message": "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales",
+          "count": 4,
+          "examples": [
+            {
+              "path": "order_entry/xdbUtilities.sql",
+              "line": 575
+            },
+            {
+              "path": "order_entry/xdbUtilities.sql",
+              "line": 666
+            },
+            {
+              "path": "order_entry/xdbUtilities.sql",
+              "line": 680
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"(\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "order_entry/oc_popul.sql",
+              "line": 152
+            },
+            {
+              "path": "order_entry/oc_popul.sql",
+              "line": 159
+            },
+            {
+              "path": "order_entry/oc_popul.sql",
+              "line": 166
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &log_path",
+          "count": 4,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 97
+            },
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 165
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 102
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \")\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "order_entry/oe_analz.sql",
+              "line": 40
+            },
+            {
+              "path": "order_entry/xdbConfiguration.sql",
+              "line": 67
+            },
+            {
+              "path": "product_media/pm_analz.sql",
+              "line": 53
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &5",
+          "count": 3,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 79
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 84
+            },
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 61
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pm_pass",
+          "count": 3,
+          "examples": [
+            {
+              "path": "product_media/long2lob.sql",
+              "line": 66
+            },
+            {
+              "path": "product_media/long2lob.sql",
+              "line": 78
+            },
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 67
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \".\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/cmnt_v3.sql",
+              "line": 48
+            },
+            {
+              "path": "order_entry/oe_comnt.sql",
+              "line": 48
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"control\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "product_media/long2lob.sql",
+              "line": 79
+            },
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 68
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&connect_string",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/xdb03usg.sql",
+              "line": 94
+            },
+            {
+              "path": "order_entry/xdb03usg.sql",
+              "line": 98
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&pass_sys",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/createUser.sql",
+              "line": 88
+            },
+            {
+              "path": "order_entry/xdb03usg.sql",
+              "line": 94
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &6",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 82
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 87
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &7",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 85
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 90
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &8",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 88
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 93
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &9",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 91
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 96
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &ctl_file",
+          "count": 2,
+          "examples": [
+            {
+              "path": "product_media/long2lob.sql",
+              "line": 79
+            },
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 68
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &dat_file",
+          "count": 2,
+          "examples": [
+            {
+              "path": "product_media/long2lob.sql",
+              "line": 79
+            },
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 68
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &data_path",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 165
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 158
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &log_file",
+          "count": 2,
+          "examples": [
+            {
+              "path": "product_media/long2lob.sql",
+              "line": 79
+            },
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 68
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &spool_file",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 98
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &ttbs",
+          "count": 2,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 117
+            },
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 111
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"LOAD\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sales_history/sh_populate.sql",
+              "line": 501
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"ON\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "customer_orders/co_create.sql",
+              "line": 173
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"TABLE\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "order_entry/oc_cre.sql",
+              "line": 360
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"USING\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "order_entry/oe_views.sql",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&pass_oe",
+          "count": 1,
+          "examples": [
+            {
+              "path": "order_entry/coe_xml.sql",
+              "line": 113
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &passhr",
+          "count": 1,
+          "examples": [
+            {
+              "path": "order_entry/oe_main.sql",
+              "line": 136
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &passoe",
+          "count": 1,
+          "examples": [
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 120
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pm_dat_path",
+          "count": 1,
+          "examples": [
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 63
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pm_log_path",
+          "count": 1,
+          "examples": [
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 65
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pm_wrk_path",
+          "count": 1,
+          "examples": [
+            {
+              "path": "product_media/pm_p_lob.sql",
+              "line": 64
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &pwd_oe",
+          "count": 1,
+          "examples": [
+            {
+              "path": "order_entry/coe_v3.sql",
+              "line": 365
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &work_path",
+          "count": 1,
+          "examples": [
+            {
+              "path": "product_media/pm_main.sql",
+              "line": 158
+            }
+          ]
+        }
+      ]
+    },
+    "oracle-db-examples": {
+      "measurement": {
+        "label": "oracle-db-examples",
+        "revision": "f1b90ba5da8f23b9b323d5929d3a18475b837a3b",
+        "utc": "2026-11-06T13:28:40.677029+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 2.8328015959996264,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "1513",
+              "Invalid": "0",
+              "Writes": "1513",
+              "Files": "1513",
+              "Lines of code": "299426",
+              "Compilation units": "124386",
+              "Parsed units": "123789",
+              "Degraded units": "597",
+              "Resolved references": "166478",
+              "Parse time": "531ms",
+              "Total time": "2.811s",
+              "Throughput": "106529 LOC/s",
+              "Peak sampled heap": "274.9 MiB"
+            },
+            "index_sha256": "141aeb516815411501088bda442bae46d21bfdb8c12c78dd61190ac621a1e4a1",
+            "index_bytes": 21619442
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 2.3886488509961055,
+            "metrics": {
+              "Hits": "1513",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "1513",
+              "Lines of code": "299426",
+              "Compilation units": "124386",
+              "Parsed units": "123789",
+              "Degraded units": "597",
+              "Resolved references": "166478",
+              "Parse time": "545ms",
+              "Total time": "2.357s",
+              "Throughput": "127052 LOC/s",
+              "Peak sampled heap": "286.2 MiB"
+            },
+            "index_sha256": "141aeb516815411501088bda442bae46d21bfdb8c12c78dd61190ac621a1e4a1",
+            "index_bytes": 21619442
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "mining-model-unresolved",
+          "message": "No se resuelve el modelo de minería Oracle",
+          "count": 901,
+          "examples": [
+            {
+              "path": "machine-learning/r/oml4r-vignette-08-extensibility-for-r-models.sql",
+              "line": 98
+            },
+            {
+              "path": "machine-learning/r/oml4r-vignette-08-extensibility-for-r-models.sql",
+              "line": 99
+            },
+            {
+              "path": "machine-learning/sql/19c/oml4sql-anomaly-detection-1class-svm.sql",
+              "line": 151
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-unsupported",
+          "message": "El SQL dinámico literal se parseó, pero su tipo de sentencia no está soportado",
+          "count": 549,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 51
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 133
+            },
+            {
+              "path": "javascript/MLE-Demo/cleanup.sql",
+              "line": 20
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-opaque",
+          "message": "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales",
+          "count": 308,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 67
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 103
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/05-create-clone-of-clone.sql",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"using\" (SQLSTATE 42601)",
+          "count": 115,
+          "examples": [
+            {
+              "path": "machine-learning/sql/19c/oml4sql-clustering-expectation-maximization.sql",
+              "line": 328
+            },
+            {
+              "path": "machine-learning/sql/19c/oml4sql-clustering-kmeans-star-schema.sql",
+              "line": 216
+            },
+            {
+              "path": "machine-learning/sql/19c/oml4sql-clustering-kmeans.sql",
+              "line": 283
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &main_user",
+          "count": 91,
+          "examples": [
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 39
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 52
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&MAIN_PDB",
+          "count": 55,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/common/disable-snapshot-carousel.sql",
+              "line": 3
+            },
+            {
+              "path": "exadata/exascale-labs/common/disable-snapshot-carousel.sql",
+              "line": 5
+            },
+            {
+              "path": "exadata/exascale-labs/common/drop-snapshot.sql",
+              "line": 3
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &DMUSER",
+          "count": 50,
+          "examples": [
+            {
+              "path": "machine-learning/sql/19c/dmshgrants.sql",
+              "line": 34
+            },
+            {
+              "path": "machine-learning/sql/19c/dmshgrants.sql",
+              "line": 36
+            },
+            {
+              "path": "machine-learning/sql/19c/dmshgrants.sql",
+              "line": 38
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&LAB_PAUSE_SCRIPT",
+          "count": 45,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/01-create-snapshot.sql",
+              "line": 57
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/01-create-snapshot.sql",
+              "line": 71
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/02-create-consistent-snapshot.sql",
+              "line": 58
+            }
+          ]
+        },
+        {
+          "code": "ambiguous-overload",
+          "message": "La llamada coincide con varias sobrecargas",
+          "count": 42,
+          "examples": [
+            {
+              "path": "plsql/error-management/log-errors-helper-package.sql",
+              "line": 400
+            },
+            {
+              "path": "plsql/error-management/log-errors-helper-package.sql",
+              "line": 400
+            },
+            {
+              "path": "plsql/error-management/log-errors-helper-package.sql",
+              "line": 460
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &userpwd",
+          "count": 38,
+          "examples": [
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 31
+            },
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 35
+            },
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"filter\" (SQLSTATE 42601)",
+          "count": 35,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/forum_threads/test.sql",
+              "line": 52
+            },
+            {
+              "path": "text/oracle-text-scripts/mcds/mcds.sql",
+              "line": 23
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/bigtable.sql",
+              "line": 49
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"SELECT\" (SQLSTATE 42601)",
+          "count": 32,
+          "examples": [
+            {
+              "path": "machine-learning/r/oml4r-vignette-10-best-practices.sql",
+              "line": 75
+            },
+            {
+              "path": "plsql/code-analysis/plscope-examples.sql",
+              "line": 186
+            },
+            {
+              "path": "sql/analytical-sql-examples/analytics-18c-character-encoding-validation.sql",
+              "line": 23
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&ROOT_CONTAINER",
+          "count": 31,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/common/disable-snapshot-carousel.sql",
+              "line": 7
+            },
+            {
+              "path": "exadata/exascale-labs/common/drop-snapshot.sql",
+              "line": 9
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/01-create-snapshot.sql",
+              "line": 62
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"&\" (SQLSTATE 42601)",
+          "count": 28,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 56
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 79
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 82
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"identified\" (SQLSTATE 42601)",
+          "count": 28,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/StreamingOutput/Testing/Test_New_Dbms_Output.sql",
+              "line": 11
+            },
+            {
+              "path": "text/oracle-text-scripts/chinese/chinese_testcase.sql",
+              "line": 16
+            },
+            {
+              "path": "text/oracle-text-scripts/chinese/chinese_testcase2.sql",
+              "line": 7
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &dba_user",
+          "count": 28,
+          "examples": [
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 31
+            },
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 32
+            },
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 128
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&TABELLE",
+          "count": 27,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/debbie.sql",
+              "line": 10
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/debbie.sql",
+              "line": 18
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/debbie.sql",
+              "line": 19
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"Run\" (SQLSTATE 42601)",
+          "count": 25,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Deleting-Duplicates.sql",
+              "line": 4
+            },
+            {
+              "path": "sql/analytical-sql-examples/analytics-Dynamically-sized-windows.sql",
+              "line": 4
+            },
+            {
+              "path": "sql/analytical-sql-examples/analytics-First-look-at-Window-functions.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&DEV_CLONE_1",
+          "count": 20,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 33
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 43
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 57
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"(\" (SQLSTATE 42601)",
+          "count": 18,
+          "examples": [
+            {
+              "path": "json-relational-duality/JSON-to-Duality-View-Migrator-Tutorial.sql",
+              "line": 199
+            },
+            {
+              "path": "json-relational-duality/JSON-to-Duality-View-Migrator-Tutorial.sql",
+              "line": 203
+            },
+            {
+              "path": "json-relational-duality/JSON-to-Duality-View-Migrator-Tutorial.sql",
+              "line": 204
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&SNAPSHOT_NAME",
+          "count": 18,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/common/config.sql",
+              "line": 31
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/01-create-snapshot.sql",
+              "line": 10
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/01-create-snapshot.sql",
+              "line": 61
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"deferred\" (SQLSTATE 42601)",
+          "count": 17,
+          "examples": [
+            {
+              "path": "optimizer/fine_grained/tests.sql",
+              "line": 49
+            },
+            {
+              "path": "optimizer/fine_grained/tests.sql",
+              "line": 53
+            },
+            {
+              "path": "optimizer/fine_grained/tests.sql",
+              "line": 86
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&DEV_CLONE_2",
+          "count": 17,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 38
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 48
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 58
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"search\" (SQLSTATE 42601)",
+          "count": 16,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/contextv2/context_v2_example.sql",
+              "line": 19
+            },
+            {
+              "path": "text/oracle-text-scripts/contextv2/context_v2_example.sql",
+              "line": 34
+            },
+            {
+              "path": "text/oracle-text-scripts/contextv2/params.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"<\" (SQLSTATE 42601)",
+          "count": 14,
+          "examples": [
+            {
+              "path": "java/23ai-springboot3-jdbc/script/EMPLOYEE.SQL",
+              "line": 1
+            },
+            {
+              "path": "java/23ai-springboot3-jpa-ucp/script/23c-SpringBoot-JPA_Hibernate-UCP.sql",
+              "line": 1
+            },
+            {
+              "path": "java/jdbc-bool-plsql/script/StoredProcHqEmployee.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&APP_NAME",
+          "count": 14,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 35
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 36
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/04-verify-independence.sql",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&DEV_CLONE_CHILD",
+          "count": 14,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/05-create-clone-of-clone.sql",
+              "line": 12
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/05-create-clone-of-clone.sql",
+              "line": 45
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/05-create-clone-of-clone.sql",
+              "line": 46
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &INDEXNAME$R",
+          "count": 14,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/clearRowid.sql",
+              "line": 43
+            },
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/clearRowid.sql",
+              "line": 47
+            },
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/clearRowid.sql",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \")\" (SQLSTATE 42601)",
+          "count": 13,
+          "examples": [
+            {
+              "path": "java/ojvm/JSON-Tables.sql",
+              "line": 5
+            },
+            {
+              "path": "optimizer/creative_w_plan/profile/disable_prof.sql",
+              "line": 6
+            },
+            {
+              "path": "optimizer/creative_w_plan/profile/enable_prof.sql",
+              "line": 6
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &schname",
+          "count": 12,
+          "examples": [
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 79
+            },
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 88
+            },
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 96
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &score",
+          "count": 12,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/fuzzy/fuzzy_test.sql",
+              "line": 37
+            },
+            {
+              "path": "text/oracle-text-scripts/fuzzy/fuzzy_test.sql",
+              "line": 48
+            },
+            {
+              "path": "text/oracle-text-scripts/fuzzy/fuzzy_test.sql",
+              "line": 59
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &1",
+          "count": 11,
+          "examples": [
+            {
+              "path": "optimizer/column_groups/cg_from_sqlid.sql",
+              "line": 18
+            },
+            {
+              "path": "optimizer/column_groups/corr_from_sqlid.sql",
+              "line": 13
+            },
+            {
+              "path": "txeventq/kafka-connector-example/sql/setupTeq.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"BY\" (SQLSTATE 42601)",
+          "count": 10,
+          "examples": [
+            {
+              "path": "optimizer/att_clu_zone_map/05_create_fact.sql",
+              "line": 62
+            },
+            {
+              "path": "optimizer/att_clu_zone_map/07_zm_lin_inter.sql",
+              "line": 44
+            },
+            {
+              "path": "optimizer/topn/eg1.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&QA_PDB",
+          "count": 10,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-create-qa-from-latest-snapshot.sql",
+              "line": 11
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-create-qa-from-latest-snapshot.sql",
+              "line": 41
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-create-qa-from-latest-snapshot.sql",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &target_index",
+          "count": 10,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/dollarRcheck2.sql",
+              "line": 251
+            },
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/dollarRcheck2.sql",
+              "line": 255
+            },
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/dollarRcheck2.sql",
+              "line": 262
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"6\" (SQLSTATE 42601)",
+          "count": 9,
+          "examples": [
+            {
+              "path": "machine-learning/sql/19c/oml4sql-singular-value-decomposition.sql",
+              "line": 335
+            },
+            {
+              "path": "machine-learning/sql/20c/oml4sql-feature-extraction-svd.sql",
+              "line": 335
+            },
+            {
+              "path": "machine-learning/sql/20c/oml4sql-singular-value-decomposition.sql",
+              "line": 335
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"end\" (SQLSTATE 42601)",
+          "count": 9,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 56
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 70
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 71
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&CONSISTENT_SNAPSHOT_NAME",
+          "count": 9,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/02-create-consistent-snapshot.sql",
+              "line": 11
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/02-create-consistent-snapshot.sql",
+              "line": 62
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/02-create-consistent-snapshot.sql",
+              "line": 67
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&PASSWORD",
+          "count": 9,
+          "examples": [
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 88
+            },
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 98
+            },
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 124
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&POST_REFRESH_SNAPSHOT_NAME",
+          "count": 9,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-capture-post-refresh-snapshot.sql",
+              "line": 11
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-capture-post-refresh-snapshot.sql",
+              "line": 62
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-capture-post-refresh-snapshot.sql",
+              "line": 67
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \".\" (SQLSTATE 42601)",
+          "count": 8,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/hospitaldemo/hospital/hospital.sql",
+              "line": 147
+            },
+            {
+              "path": "text/oracle-text-scripts/hospitaldemo/hospital/test.sql",
+              "line": 74
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/ctx_report.sql",
+              "line": 163
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"/\" (SQLSTATE 42601)",
+          "count": 8,
+          "examples": [
+            {
+              "path": "java/jdbc/SessionlessTransactions/src/test/resources/createSchema.sql",
+              "line": 10
+            },
+            {
+              "path": "java/jdbc/SessionlessTransactions/src/test/resources/createSchema.sql",
+              "line": 20
+            },
+            {
+              "path": "java/jdbc/SessionlessTransactions/src/test/resources/createSchema.sql",
+              "line": 28
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &quot",
+          "count": 8,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/describe_index.sql",
+              "line": 5
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/describe_index.sql",
+              "line": 5
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/describe_index.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"SQL\" (SQLSTATE 42601)",
+          "count": 7,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/json/index.sql",
+              "line": 1
+            },
+            {
+              "path": "text/oracle-text-scripts/json/index.sql",
+              "line": 61
+            },
+            {
+              "path": "text/oracle-text-scripts/lang_options/out.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &K_LENGTH",
+          "count": 7,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/k-grams/k-gram-uds.sql",
+              "line": 61
+            },
+            {
+              "path": "text/oracle-text-scripts/k-grams/k-gram-uds.sql",
+              "line": 158
+            },
+            {
+              "path": "text/oracle-text-scripts/k-grams/notext2.sql",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"$\" (SQLSTATE 42601)",
+          "count": 6,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dbms_redefinition/Modify_column_with_text_index.sql",
+              "line": 24
+            },
+            {
+              "path": "text/oracle-text-scripts/dbms_redefinition/Modify_column_with_text_index.sql",
+              "line": 46
+            },
+            {
+              "path": "text/oracle-text-scripts/dbms_redefinition/Modify_column_with_text_index.sql",
+              "line": 155
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \",\" (SQLSTATE 42601)",
+          "count": 6,
+          "examples": [
+            {
+              "path": "json-relational-duality/JSON-to-Duality-View-Migrator-Tutorial.sql",
+              "line": 70
+            },
+            {
+              "path": "json-relational-duality/JSON-to-Duality-View-Migrator-Tutorial.sql",
+              "line": 94
+            },
+            {
+              "path": "json-relational-duality/JSON-to-Duality-View-Migrator-Tutorial.sql",
+              "line": 131
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"=\" (SQLSTATE 42601)",
+          "count": 6,
+          "examples": [
+            {
+              "path": "machine-learning/sql/19c/oml4sql-r-extensible-feature-extraction-via-pca.sql",
+              "line": 203
+            },
+            {
+              "path": "machine-learning/sql/20c/oml4sql-r-extensible-principal-components.sql",
+              "line": 203
+            },
+            {
+              "path": "machine-learning/sql/21c/oml4sql-r-extensible-principal-components.sql",
+              "line": 203
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"@\" (SQLSTATE 42601)",
+          "count": 6,
+          "examples": [
+            {
+              "path": "optimizer/expression_stats/expression.sql",
+              "line": 22
+            },
+            {
+              "path": "optimizer/expression_stats/expression.sql",
+              "line": 33
+            },
+            {
+              "path": "optimizer/expression_stats/expression.sql",
+              "line": 76
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"as\" (SQLSTATE 42601)",
+          "count": 6,
+          "examples": [
+            {
+              "path": "plsql/object-oriented-development/dynamic-polymorphism.sql",
+              "line": 97
+            },
+            {
+              "path": "plsql/object-oriented-development/dynamic-polymorphism.sql",
+              "line": 152
+            },
+            {
+              "path": "plsql/object-oriented-development/generalized-invocation.sql",
+              "line": 45
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"{\" (SQLSTATE 42601)",
+          "count": 6,
+          "examples": [
+            {
+              "path": "java/jdbc-relational-duality-example/sql/database.sql",
+              "line": 24
+            },
+            {
+              "path": "java/jdbc-relational-duality-example/sql/extended-sample.sql",
+              "line": 25
+            },
+            {
+              "path": "java/micronaut-jsonview-demo-app/src/main/resources/db/migration/V2__view.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&SNAPSHOT_ACTION",
+          "count": 6,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/07-cleanup.sql",
+              "line": 92
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/07-cleanup.sql",
+              "line": 111
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/04-cleanup.sql",
+              "line": 93
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&SPALTE",
+          "count": 6,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/debbie.sql",
+              "line": 10
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/debbie.sql",
+              "line": 84
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/debbie2.sql",
+              "line": 10
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&user",
+          "count": 6,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/long_identifier_test.sql",
+              "line": 12
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/long_identifier_test.sql",
+              "line": 14
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/long_identifier_test.sql",
+              "line": 14
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &idxid",
+          "count": 6,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/shadow_index/shadow2.sql",
+              "line": 43
+            },
+            {
+              "path": "text/oracle-text-scripts/shadow_index/shadow_index_rf.sql",
+              "line": 33
+            },
+            {
+              "path": "text/oracle-text-scripts/shadow_index/shadow_index_rf.sql",
+              "line": 39
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"search\" (SQLSTATE 42601)",
+          "count": 5,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/sodatest.sql",
+              "line": 45
+            },
+            {
+              "path": "text/oracle-text-scripts/soda/soda2.sql",
+              "line": 19
+            },
+            {
+              "path": "text/oracle-text-scripts/soda/soda3.sql",
+              "line": 9
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"4\" (SQLSTATE 42601)",
+          "count": 5,
+          "examples": [
+            {
+              "path": "machine-learning/sql/19c/oml4sql-clustering-kmeans.sql",
+              "line": 309
+            },
+            {
+              "path": "machine-learning/sql/20c/oml4sql-clustering-kmeans.sql",
+              "line": 309
+            },
+            {
+              "path": "machine-learning/sql/21c/oml4sql-clustering-kmeans.sql",
+              "line": 309
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"A0005\" (SQLSTATE 42601)",
+          "count": 5,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/fixed_testcase.sql",
+              "line": 23
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/shorted_testcase.sql",
+              "line": 19
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/shortened_testcase.sql",
+              "line": 19
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"of\" (SQLSTATE 42601)",
+          "count": 5,
+          "examples": [
+            {
+              "path": "java/jdbc-data-types/scripts/init.sql",
+              "line": 70
+            },
+            {
+              "path": "plsql/object-oriented-development/object-types-in-relational-tables.sql",
+              "line": 21
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/test1.sql",
+              "line": 3
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"procedure\" (SQLSTATE 42601)",
+          "count": 5,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 34
+            },
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 58
+            },
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 151
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&1",
+          "count": 5,
+          "examples": [
+            {
+              "path": "machine-learning/sql/19c/dmshgrants.sql",
+              "line": 32
+            },
+            {
+              "path": "machine-learning/sql/20c/dmshgrants.sql",
+              "line": 32
+            },
+            {
+              "path": "machine-learning/sql/21c/dmshgrants.sql",
+              "line": 32
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &4",
+          "count": 5,
+          "examples": [
+            {
+              "path": "txeventq/kafka-connector-example/sql/setupTeq.sql",
+              "line": 3
+            },
+            {
+              "path": "txeventq/kafka-connector-example/sql/setupTeq.sql",
+              "line": 4
+            },
+            {
+              "path": "txeventq/kafka-connector-example/sql/setupTeq.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &INDEX_NAME$i",
+          "count": 5,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/overlap/print_overlaps.sql",
+              "line": 22
+            },
+            {
+              "path": "text/oracle-text-scripts/overlap/print_overlaps.sql",
+              "line": 22
+            },
+            {
+              "path": "text/oracle-text-scripts/overlap/remove_overlaps.sql",
+              "line": 19
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"'30579 trace name context forever, level 268435456'\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/small_r_conversion4.sql",
+              "line": 176
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/small_r_conversion5k.sql",
+              "line": 178
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/small_r_conversion_split.sql",
+              "line": 197
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at end of input (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "machine-learning/sql/20c/oml4sql-feature-extraction-text-mining-nmf.sql",
+              "line": 101
+            },
+            {
+              "path": "machine-learning/sql/21c/oml4sql-feature-extraction-text-mining-nmf.sql",
+              "line": 101
+            },
+            {
+              "path": "machine-learning/sql/23ai/oml4sql-feature-extraction-text-mining-nmf.sql",
+              "line": 101
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"\\u2003\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "optimizer/px_wm_wp/dbrm_example.sql",
+              "line": 70
+            },
+            {
+              "path": "optimizer/px_wm_wp/dbrm_example.sql",
+              "line": 129
+            },
+            {
+              "path": "optimizer/px_wm_wp/px_dbrm_queries.sql",
+              "line": 38
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"BOT_USER\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "java/telegram-bot-quarkus/script/Tips.sql",
+              "line": 4
+            },
+            {
+              "path": "java/telegram-bot-quarkus/script/Tips.sql",
+              "line": 5
+            },
+            {
+              "path": "java/telegram-bot-quarkus/script/Tips.sql",
+              "line": 6
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"CREATE\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "plsql/code-analysis/plscope-examples.sql",
+              "line": 43
+            },
+            {
+              "path": "sql/analytical-sql-examples/analytics-LISTAGG-with-the-OVER-clause.sql",
+              "line": 400
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/bigtable.sql",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"EXECUTE\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/partitions/merg_test.pls",
+              "line": 184
+            },
+            {
+              "path": "text/oracle-text-scripts/partitions/merge_partitions.pls",
+              "line": 184
+            },
+            {
+              "path": "text/oracle-text-scripts/partitions/merge_split.sql",
+              "line": 201
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xxSNAPSHOT_NAME\" (SQLSTATE 42601)",
+          "count": 4,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/01-create-snapshot.sql",
+              "line": 66
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 43
+            },
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/03-create-clones.sql",
+              "line": 48
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&table",
+          "count": 4,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/long_identifier_test.sql",
+              "line": 22
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/long_identifier_test.sql",
+              "line": 28
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/long_identifier_test.sql",
+              "line": 31
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &DATABASE_ALIAS",
+          "count": 4,
+          "examples": [
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 151
+            },
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 187
+            },
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 211
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &edition_user",
+          "count": 4,
+          "examples": [
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 87
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 93
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 96
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &schema",
+          "count": 4,
+          "examples": [
+            {
+              "path": "optimizer/upgrading_to_12c/duplicate/copy_hist_a.sql",
+              "line": 28
+            },
+            {
+              "path": "optimizer/upgrading_to_12c/duplicate/copy_hist_a.sql",
+              "line": 29
+            },
+            {
+              "path": "optimizer/upgrading_to_12c/duplicate/copy_hist_a.sql",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &syspwd",
+          "count": 4,
+          "examples": [
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 12
+            },
+            {
+              "path": "security/sql-firewall/demo.sql",
+              "line": 425
+            },
+            {
+              "path": "sql-firewall/demo.sql",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'$.name'\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "json-relational-duality/DualityViewTutorial.sql",
+              "line": 419
+            },
+            {
+              "path": "json-relational-duality/DualityViewTutorial.sql",
+              "line": 427
+            },
+            {
+              "path": "json-relational-duality/DualityViewTutorial.sql",
+              "line": 489
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'30579 trace name context forever, level 2'\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/bigio.sql",
+              "line": 3
+            },
+            {
+              "path": "text/oracle-text-scripts/mvdata/altersystem.sql",
+              "line": 2
+            },
+            {
+              "path": "text/oracle-text-scripts/mvdata/simple.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"A0009\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/shorted_testcase.sql",
+              "line": 22
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/shortened_testcase.sql",
+              "line": 22
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/test.sql",
+              "line": 22
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"ctx_ddl\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/index.sql",
+              "line": 4
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/index.sql",
+              "line": 6
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/lang.sql",
+              "line": 7
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"nested\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/puresubstring/movie2.sql",
+              "line": 67
+            },
+            {
+              "path": "text/oracle-text-scripts/puresubstring/test.sql",
+              "line": 1
+            },
+            {
+              "path": "text/oracle-text-scripts/puresubstring/test2.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"RETURN\": expected ';' after the previous declaration (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "plsql/sql-in-plsql/cursor-for-loop.sql",
+              "line": 85
+            },
+            {
+              "path": "plsql/sql-in-plsql/cursors-in-plsql.sql",
+              "line": 142
+            },
+            {
+              "path": "plsql/sql-in-plsql/cursors-in-plsql.sql",
+              "line": 150
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&DROP_SNAPSHOT_NAME",
+          "count": 3,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/common/drop-snapshot.sql",
+              "line": 3
+            },
+            {
+              "path": "exadata/exascale-labs/common/drop-snapshot.sql",
+              "line": 8
+            },
+            {
+              "path": "exadata/exascale-labs/common/skip-snapshot.sql",
+              "line": 3
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&DUMMY_USER_NAME",
+          "count": 3,
+          "examples": [
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 96
+            },
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 98
+            },
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 103
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &2",
+          "count": 3,
+          "examples": [
+            {
+              "path": "optimizer/column_groups/cg_from_sqlid.sql",
+              "line": 22
+            },
+            {
+              "path": "optimizer/column_groups/corr_from_sqlid.sql",
+              "line": 17
+            },
+            {
+              "path": "txeventq/kafka-connector-example/sql/setupTeq.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &hiver",
+          "count": 3,
+          "examples": [
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 75
+            },
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 113
+            },
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 127
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &lover",
+          "count": 3,
+          "examples": [
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 74
+            },
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 113
+            },
+            {
+              "path": "optimizer/compare_ofe/ofe.sql",
+              "line": 127
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &ROWSIZE",
+          "count": 3,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/zero_lob.sql",
+              "line": 19
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/zero_lob.sql",
+              "line": 36
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/zero_lob.sql",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "code": "encoding-replacement",
+          "message": "El texto decodificado contiene un carácter de sustitución U+FFFD",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/progression.sql",
+              "line": 11
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/progression2.sql",
+              "line": 11
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"#\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "ruby/CRUD-examples/createDBObjects.sql",
+              "line": 1
+            },
+            {
+              "path": "ruby/CRUD-examples/dropDBObjects.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'$.info'\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/user_datastore/json_transform.sql",
+              "line": 15
+            },
+            {
+              "path": "text/oracle-text-scripts/user_datastore/json_transform.sql",
+              "line": 17
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'10046 trace name context forever, level 4'\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/shadow_index/example.sql",
+              "line": 22
+            },
+            {
+              "path": "text/oracle-text-scripts/shadow_index/online_pending.sql",
+              "line": 28
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'10053 trace name context off'\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "optimizer/direct_path/11g/equi.sql",
+              "line": 68
+            },
+            {
+              "path": "optimizer/direct_path/11g/tsm.sql",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'30579 trace name context forever, level 268435456'\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/test_part.sql",
+              "line": 3
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/testscript4.sql",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"-\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/chinese/chinese_testcase2.sql",
+              "line": 24
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/transact.sql",
+              "line": 61
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"/*+ APPEND */\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "optimizer/direct_path/11g/merge.sql",
+              "line": 47
+            },
+            {
+              "path": "optimizer/direct_path/12c/merge.sql",
+              "line": 47
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"0\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/ctxcat/Testcase1.sql",
+              "line": 83
+            },
+            {
+              "path": "text/oracle-text-scripts/forum_threads/empsearch.sql",
+              "line": 38
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"A0003\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/fixed_testcase.sql",
+              "line": 21
+            },
+            {
+              "path": "text/oracle-text-scripts/stoplists/stoplists.sql",
+              "line": 21
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"A0007\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/fixed_testcase.sql",
+              "line": 25
+            },
+            {
+              "path": "text/oracle-text-scripts/stoplists/stoplists.sql",
+              "line": 25
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"A1\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/lang_options/out.sql",
+              "line": 56
+            },
+            {
+              "path": "text/oracle-text-scripts/lang_options/out.sql",
+              "line": 62
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"alter\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "machine-learning/notebooks-oml/notebooks-classic/sql/Credit_Scoring_100K_SQL_Create_Table.sql",
+              "line": 1
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/testbigio.sql",
+              "line": 31
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"Elapsed\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/index.sql",
+              "line": 2207
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/index_script.sql",
+              "line": 188
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"end\": expected ';' after the previous statement (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "machine-learning/r/oml4r-vignette-10-best-practices.sql",
+              "line": 210
+            },
+            {
+              "path": "text/oracle-text-scripts/stage_itab/stage.sql",
+              "line": 32
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"exception\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 60
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 64
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"exec\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/demo/cloud/script.sql",
+              "line": 64
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/to_clob.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"insert\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/fuzzy/fuzzy_test.sql",
+              "line": 17
+            },
+            {
+              "path": "text/oracle-text-scripts/fuzzy/test.sql",
+              "line": 14
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"JOIN\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "optimizer/att_clu_zone_map/07_zm_lin_inter.sql",
+              "line": 140
+            },
+            {
+              "path": "optimizer/att_clu_zone_map/08_zm_prune.sql",
+              "line": 31
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_time_budget\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 77
+            },
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 168
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"MODE\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/common/disable-snapshot-carousel.sql",
+              "line": 6
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/01-enable-snapshot-carousel.sql",
+              "line": 75
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"NULLS\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-LAG-and-LEAD-extensions.sql",
+              "line": 60
+            },
+            {
+              "path": "sql/analytical-sql-examples/analytics-Windows-and-null-values.sql",
+              "line": 60
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"ON\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "optimizer/att_clu_zone_map/09_part_zm.sql",
+              "line": 31
+            },
+            {
+              "path": "text/oracle-text-scripts/materializedview/test.sql",
+              "line": 11
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"p_result\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 54
+            },
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"partition\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Partitioned-Outer-Join.sql",
+              "line": 53
+            },
+            {
+              "path": "text/oracle-text-scripts/partitions/matview.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"reservable\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "sagas/CloudBank-DEMO/sql-scripts/bankA.sql",
+              "line": 22
+            },
+            {
+              "path": "sagas/CloudBank-DEMO/sql-scripts/bankB.sql",
+              "line": 22
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"ROGERxquot\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/describe_index.sql",
+              "line": 5
+            },
+            {
+              "path": "text/oracle-text-scripts/small_r/describe_index.sql",
+              "line": 8
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"subpartitions\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "optimizer/direct_path/12c/hwm.sql",
+              "line": 42
+            },
+            {
+              "path": "optimizer/direct_path/12c/hwm.sql",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"this\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/printjoins2.sql",
+              "line": 1
+            },
+            {
+              "path": "text/oracle-text-scripts/partitions/merge.sql",
+              "line": 107
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"varchar2\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/scheduler/winschedtest.sql",
+              "line": 37
+            },
+            {
+              "path": "text/oracle-text-scripts/scheduler/winschedtest.sql",
+              "line": 91
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&CAROUSEL_INTERVAL",
+          "count": 2,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/01-enable-snapshot-carousel.sql",
+              "line": 68
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/01-enable-snapshot-carousel.sql",
+              "line": 75
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&CAROUSEL_MAX_SNAPSHOTS",
+          "count": 2,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/01-enable-snapshot-carousel.sql",
+              "line": 67
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/01-enable-snapshot-carousel.sql",
+              "line": 73
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&DATABASE_ALIAS",
+          "count": 2,
+          "examples": [
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 92
+            },
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 169
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&LAB_PAUSE_MESSAGE",
+          "count": 2,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/common/pause-off.sql",
+              "line": 5
+            },
+            {
+              "path": "exadata/exascale-labs/common/pause.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&LATEST_CAROUSEL_SNAPSHOT",
+          "count": 2,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-create-qa-from-latest-snapshot.sql",
+              "line": 78
+            },
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-create-qa-from-latest-snapshot.sql",
+              "line": 83
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&SNAPSHOT_CAROUSEL_ACTION",
+          "count": 2,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/04-cleanup.sql",
+              "line": 74
+            },
+            {
+              "path": "exadata/exascale-labs/setup/99-reset-lab.sql",
+              "line": 146
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &base_table",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/dollarRcheck2.sql",
+              "line": 289
+            },
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/dollarRreport.sql",
+              "line": 288
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &edition_name",
+          "count": 2,
+          "examples": [
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 99
+            },
+            {
+              "path": "python/python-oracledb/sql/create_schema.sql",
+              "line": 102
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &INDEX_NAME",
+          "count": 2,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/readDollarR.sql",
+              "line": 13
+            },
+            {
+              "path": "text/oracle-text-scripts/misc/get_index_stats.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &sqlid",
+          "count": 2,
+          "examples": [
+            {
+              "path": "optimizer/column_groups/t3.sql",
+              "line": 11
+            },
+            {
+              "path": "optimizer/column_groups/t5.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "current-schema",
+          "message": "No se puede determinar CURRENT_SCHEMA; no se resolverán nombres sin esquema",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dr_unindexed/truncate2.sql",
+              "line": 8
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"'30579 trace name context off '\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/text_events/events.sql",
+              "line": 71
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"highlight_tab\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/catid.sql",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'30579 trace name context forever, level 4'\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/namesearch/test.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'30579 trace name context forever, level 4096'\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/lang.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'30583 trace name context forever, level 1'\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/filters/ctxhx2.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"'DISABLE:6025'\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/small_r_conversion5k.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"1\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/k-grams/notext2.sql",
+              "line": 53
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"100000\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dr_unindexed/truncate2.sql",
+              "line": 8
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \":\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/principles.sql",
+              "line": 25
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"\\u200b\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "machine-learning/sql/23ai/oml4sql-time-series-regression.sql",
+              "line": 40
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"A\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/noise_ita.sql",
+              "line": 641
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"ALTRA\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/noise_ita.sql",
+              "line": 664
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"ANCHE\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/noise_ita.sql",
+              "line": 377
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"app_schema\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 174
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"BEH\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/noise_ita.sql",
+              "line": 114
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"c\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/testrule.sql",
+              "line": 23
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"c_page_size\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 175
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"c_query_param_name\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 81
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"cle\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "security/schemaprivs/SchemaPrivilegesTutorial.sql",
+              "line": 81
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"COLUMN\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/object-oriented-development/treat-is-a-treat.sql",
+              "line": 38
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"commmit\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/stage_itab/searchindex.sql",
+              "line": 30
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"DECLARE\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/collections/varray-examples.sql",
+              "line": 17
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"food_ot\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/object-oriented-development/object-types-in-relational-tables.sql",
+              "line": 26
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"From\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/dollarRdump.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"function\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 7
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"hard\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/collections/nested-string-indexed-collections-example.sql",
+              "line": 257
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"index\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/thesaurus/mediumoak.sql",
+              "line": 10
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"indextype\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/fileds.sql",
+              "line": 23
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"Ixquot\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/describe_index.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_colCnt\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Display-columns-as-rows-for-any-SQL-query.sql",
+              "line": 14
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_columnValue\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Display-columns-as-rows-for-any-SQL-query.sql",
+              "line": 11
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_continue_fetching\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 172
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_descTbl\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Display-columns-as-rows-for-any-SQL-query.sql",
+              "line": 13
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_dummy_parameters\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 75
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_has_query_param\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 84
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_in_parameters\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 76
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_page_id\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 170
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_page_to_fetch\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 173
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_param_idx\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 79
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_query_param_value\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 82
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_query_string\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 177
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_start_page_id\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 171
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_status\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Display-columns-as-rows-for-any-SQL-query.sql",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_summary\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 169
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"l_theCursor\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Display-columns-as-rows-for-any-SQL-query.sql",
+              "line": 10
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"Link\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/sql-in-plsql/trigger-predicates.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"n\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Display-columns-as-rows-for-any-SQL-query.sql",
+              "line": 15
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"old\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/stats/create_index.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"path\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/similarity/moviesim.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"PRAGMA\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/error-management/exception-init.sql",
+              "line": 16
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"Pre\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/demo/cloud/script.sql",
+              "line": 166
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"replace\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/tablefunctions/tabfn.sql",
+              "line": 6
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"RETURN\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/sql-in-plsql/cursor-for-loop.sql",
+              "line": 92
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"set\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/runit.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"size\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/facetexamples/facetex1.sql",
+              "line": 54
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"So\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/error-management/exception-init.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"STATIC\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/object-oriented-development/object-type-methods.sql",
+              "line": 152
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"t_spart1\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "optimizer/partition_exchange_load/example.sql",
+              "line": 16
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"TABLE\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "machine-learning/sql/23ai/oml4sql-time-series-regression.sql",
+              "line": 112
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"The\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "sql/analytical-sql-examples/analytics-Display-columns-as-rows-for-any-SQL-query.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"TOT\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/noise_ita.sql",
+              "line": 882
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"Tue\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/dollarRdump.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"Txquot\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/describe_index.sql",
+              "line": 8
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"type\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "apex/plugins/rest-source/fixed-page-size/plugin-plsql-code.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"v_buffer\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/getgist_orig.sql",
+              "line": 6
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"v_read_amount\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/getgist_orig.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"v_read_offset\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/getgist_orig.sql",
+              "line": 5
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"v_result\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/getgist_orig.sql",
+              "line": 3
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"WITH\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/code-analysis/find-sql-with-user-defined-functions.sql",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xgt\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/forum_threads/empsearch.sql",
+              "line": 25
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xs\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/small_r/convback.sql",
+              "line": 9
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xshell\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/ses_delete2.sql",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xxCAROUSEL_MAX_SNAPSHOTS\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/01-enable-snapshot-carousel.sql",
+              "line": 73
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xxCONSISTENT_SNAPSHOT_NAME\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-01-pdb-thin-clones/02-create-consistent-snapshot.sql",
+              "line": 67
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xxLATEST_CAROUSEL_SNAPSHOT\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-create-qa-from-latest-snapshot.sql",
+              "line": 81
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xxPOST_REFRESH_SNAPSHOT_NAME\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "exadata/exascale-labs/lab-02-pdb-snapshot-carousels/03-capture-post-refresh-snapshot.sql",
+              "line": 67
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"||\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/sample.sql",
+              "line": 167
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: unterminated block comment (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "plsql/error-management/no-reraise-no-exception.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: unterminated string literal at or near \"'/\\r\\n\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/alt.sql",
+              "line": 90
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &3",
+          "count": 1,
+          "examples": [
+            {
+              "path": "optimizer/column_groups/corr_from_sqlid.sql",
+              "line": 17
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &child",
+          "count": 1,
+          "examples": [
+            {
+              "path": "optimizer/spm_on_11g/plan.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &enterid",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/small_r_test_invrowid.sql",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &gt",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/forum_threads/empsearch.sql",
+              "line": 38
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &hi",
+          "count": 1,
+          "examples": [
+            {
+              "path": "optimizer/spm_fix/pawr.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &IDX_NAME$k",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/checkdollark.sql",
+              "line": 10
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &idxid$k",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/shadow_index/shadow_index_testcase.sql",
+              "line": 44
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &INDEX_NAME$k",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/patchup.sql",
+              "line": 24
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &INDEX_NAME$n",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/dollar_r_utils/patchup.sql",
+              "line": 37
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &low",
+          "count": 1,
+          "examples": [
+            {
+              "path": "optimizer/spm_fix/pawr.sql",
+              "line": 4
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &myphv",
+          "count": 1,
+          "examples": [
+            {
+              "path": "optimizer/spm_fix/spm.sql",
+              "line": 48
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &shell",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/ses_delete2.sql",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &TAB_NAME",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/checkdollark.sql",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &TABNAME",
+          "count": 1,
+          "examples": [
+            {
+              "path": "text/oracle-text-scripts/misc/checksecurefile.sql",
+              "line": 8
+            }
+          ]
+        }
+      ]
+    },
+    "plex": {
+      "measurement": {
+        "label": "plex",
+        "revision": "3b13e44dae443d6033e5b4ceedd5d0de1b284716",
+        "utc": "2026-11-06T13:28:49.041145+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.06530531000316842,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "14",
+              "Invalid": "0",
+              "Writes": "14",
+              "Files": "14",
+              "Lines of code": "8575",
+              "Compilation units": "45",
+              "Parsed units": "43",
+              "Degraded units": "2",
+              "Resolved references": "332",
+              "Parse time": "10ms",
+              "Total time": "61ms",
+              "Throughput": "140733 LOC/s",
+              "Peak sampled heap": "3.4 MiB"
+            },
+            "index_sha256": "ab69034efd17c2f6cd6ba642082bf382e0fa11af7ea2f24e8d84f4b6fd121f11",
+            "index_bytes": 76061
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.058856320996710565,
+            "metrics": {
+              "Hits": "14",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "14",
+              "Lines of code": "8575",
+              "Compilation units": "45",
+              "Parsed units": "43",
+              "Degraded units": "2",
+              "Resolved references": "332",
+              "Parse time": "13ms",
+              "Total time": "55ms",
+              "Throughput": "155782 LOC/s",
+              "Peak sampled heap": "4.9 MiB"
+            },
+            "index_sha256": "ab69034efd17c2f6cd6ba642082bf382e0fa11af7ea2f24e8d84f4b6fd121f11",
+            "index_bytes": 76061
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$APEX_INSTALLED",
+          "count": 22,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 126
+            },
+            {
+              "path": "plex_install.sql",
+              "line": 1249
+            },
+            {
+              "path": "plex_install.sql",
+              "line": 2025
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$ORDS_INSTALLED",
+          "count": 10,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 142
+            },
+            {
+              "path": "plex_install.sql",
+              "line": 2040
+            },
+            {
+              "path": "plex_install.sql",
+              "line": 2817
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-opaque",
+          "message": "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales",
+          "count": 7,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 38
+            },
+            {
+              "path": "plex_uninstall.sql",
+              "line": 14
+            },
+            {
+              "path": "plex_uninstall.sql",
+              "line": 25
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$DEBUG_ON",
+          "count": 6,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 2284
+            },
+            {
+              "path": "plex_install.sql",
+              "line": 2456
+            },
+            {
+              "path": "plex_install.sql",
+              "line": 3558
+            }
+          ]
+        },
+        {
+          "code": "ambiguous-overload",
+          "message": "La llamada coincide con varias sobrecargas",
+          "count": 4,
+          "examples": [
+            {
+              "path": "src/lib/as_zip.sql",
+              "line": 259
+            },
+            {
+              "path": "src/lib/as_zip.sql",
+              "line": 259
+            },
+            {
+              "path": "src/lib/as_zip.sql",
+              "line": 374
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$UTILS_PUBLIC",
+          "count": 4,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 475
+            },
+            {
+              "path": "plex_install.sql",
+              "line": 740
+            },
+            {
+              "path": "src/PLEX.pkb",
+              "line": 122
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$JAVA_INSTALLED",
+          "count": 2,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 2444
+            },
+            {
+              "path": "src/PLEX.pkb",
+              "line": 1826
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-unsupported",
+          "message": "El SQL dinámico literal se parseó, pero su tipo de sentencia no está soportado",
+          "count": 2,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 36
+            },
+            {
+              "path": "src/plex_install.sql",
+              "line": 36
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"tab_export_files\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "plex_install.sql",
+              "line": 619
+            },
+            {
+              "path": "src/PLEX.pkb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &1",
+          "count": 2,
+          "examples": [
+            {
+              "path": "test/test_types_2_data.sql",
+              "line": 15
+            },
+            {
+              "path": "test/test_types_2_data.sql",
+              "line": 18
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"-\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "test/test_types_1_table.sql",
+              "line": 32
+            }
+          ]
+        }
+      ]
+    },
+    "pljson": {
+      "measurement": {
+        "label": "pljson",
+        "revision": "09a54e4e9318af36c6d27f0e7170bd4a376276b2",
+        "utc": "2026-11-06T13:28:48.215108+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.14710917400225298,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "70",
+              "Invalid": "0",
+              "Writes": "70",
+              "Files": "70",
+              "Lines of code": "16003",
+              "Compilation units": "128",
+              "Parsed units": "122",
+              "Degraded units": "6",
+              "Resolved references": "10953",
+              "Parse time": "11ms",
+              "Total time": "143ms",
+              "Throughput": "112047 LOC/s",
+              "Peak sampled heap": "10.8 MiB"
+            },
+            "index_sha256": "4adbc13405cede30e979748a32f672533f2492b21343be281a260040576f72b0",
+            "index_bytes": 1412607
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.11571194400312379,
+            "metrics": {
+              "Hits": "70",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "70",
+              "Lines of code": "16003",
+              "Compilation units": "128",
+              "Parsed units": "122",
+              "Degraded units": "6",
+              "Resolved references": "10953",
+              "Parse time": "11ms",
+              "Total time": "111ms",
+              "Throughput": "143907 LOC/s",
+              "Peak sampled heap": "10.2 MiB"
+            },
+            "index_sha256": "4adbc13405cede30e979748a32f672533f2492b21343be281a260040576f72b0",
+            "index_bytes": 1412607
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "ambiguous-overload",
+          "message": "La llamada coincide con varias sobrecargas",
+          "count": 3008,
+          "examples": [
+            {
+              "path": "examples/ex10.sql",
+              "line": 47
+            },
+            {
+              "path": "examples/ex10.sql",
+              "line": 47
+            },
+            {
+              "path": "examples/ex10.sql",
+              "line": 51
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-unsupported",
+          "message": "El SQL dinámico literal se parseó, pero su tipo de sentencia no está soportado",
+          "count": 33,
+          "examples": [
+            {
+              "path": "testsuite-utplsql/utplsql_pljson_table_test.sql",
+              "line": 67
+            },
+            {
+              "path": "testsuite-utplsql/utplsql_pljson_table_test.sql",
+              "line": 82
+            },
+            {
+              "path": "testsuite/pljson_table.test.sql",
+              "line": 15
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"(\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "src/addons/pljson_dyn.package.sql",
+              "line": 63
+            },
+            {
+              "path": "src/pljson.type.impl.sql",
+              "line": 1
+            },
+            {
+              "path": "src/pljson_list.type.impl.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"pljson\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "testsuite-utplsql/utplsql_pljson_base64_test.sql",
+              "line": 26
+            },
+            {
+              "path": "testsuite/pljson_base64.test.sql",
+              "line": 12
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"member\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "src/addons/pljson_table_impl.type.impl.sql",
+              "line": 1
+            }
+          ]
+        }
+      ]
+    },
+    "tePLSQL": {
+      "measurement": {
+        "label": "tePLSQL",
+        "revision": "1480866d15c1312183a938d13e629cd6ba3f3747",
+        "utc": "2026-11-06T13:28:49.518206+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.038349775997630786,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "17",
+              "Invalid": "0",
+              "Writes": "17",
+              "Files": "17",
+              "Lines of code": "4627",
+              "Compilation units": "19",
+              "Parsed units": "17",
+              "Degraded units": "2",
+              "Resolved references": "172",
+              "Parse time": "3ms",
+              "Total time": "35ms",
+              "Throughput": "133256 LOC/s",
+              "Peak sampled heap": "1.6 MiB"
+            },
+            "index_sha256": "62c8308d2838997b57b7c94bd290400c7b817773f5a925e7db4f056dc7b5cabc",
+            "index_bytes": 80102
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.03351218200259609,
+            "metrics": {
+              "Hits": "17",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "17",
+              "Lines of code": "4627",
+              "Compilation units": "19",
+              "Parsed units": "17",
+              "Degraded units": "2",
+              "Resolved references": "172",
+              "Parse time": "4ms",
+              "Total time": "30ms",
+              "Throughput": "153129 LOC/s",
+              "Peak sampled heap": "1.7 MiB"
+            },
+            "index_sha256": "62c8308d2838997b57b7c94bd290400c7b817773f5a925e7db4f056dc7b5cabc",
+            "index_bytes": 80102
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "conditional-compilation",
+          "message": "carácter condicional no soportado: '.'",
+          "count": 8,
+          "examples": [
+            {
+              "path": "tePLSQL.pkb",
+              "line": 185
+            },
+            {
+              "path": "tePLSQL.pkb",
+              "line": 375
+            },
+            {
+              "path": "tePLSQL.pkb",
+              "line": 557
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"SIZE\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "TE_TEMPLATES_API.pkb",
+              "line": 2
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"t_indentable_clob\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "tePLSQL.pkb",
+              "line": 1
+            }
+          ]
+        }
+      ]
+    },
+    "utPLSQL": {
+      "measurement": {
+        "label": "utPLSQL",
+        "revision": "bbcedf130f42bc6648b425c82258121e36afdbf5",
+        "utc": "2026-11-06T13:28:47.615310+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.288737556002161,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "338",
+              "Invalid": "0",
+              "Writes": "338",
+              "Files": "338",
+              "Lines of code": "31027",
+              "Compilation units": "706",
+              "Parsed units": "591",
+              "Degraded units": "115",
+              "Resolved references": "6395",
+              "Parse time": "20ms",
+              "Total time": "284ms",
+              "Throughput": "109265 LOC/s",
+              "Peak sampled heap": "17.4 MiB"
+            },
+            "index_sha256": "0f9ab6f8b8dc104b8f56a10018550c54e40b63cc614d182489e274ec896dba04",
+            "index_bytes": 2414052
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.1916137600055663,
+            "metrics": {
+              "Hits": "338",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "338",
+              "Lines of code": "31027",
+              "Compilation units": "706",
+              "Parsed units": "591",
+              "Degraded units": "115",
+              "Resolved references": "6395",
+              "Parse time": "20ms",
+              "Total time": "186ms",
+              "Throughput": "167005 LOC/s",
+              "Peak sampled heap": "16.5 MiB"
+            },
+            "index_sha256": "0f9ab6f8b8dc104b8f56a10018550c54e40b63cc614d182489e274ec896dba04",
+            "index_bytes": 2414052
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": [
+        {
+          "code": "ambiguous-overload",
+          "message": "La llamada coincide con varias sobrecargas",
+          "count": 599,
+          "examples": [
+            {
+              "path": "examples/RunExampleTestAnnotationBasedForCurrentSchema.sql",
+              "line": 9
+            },
+            {
+              "path": "examples/RunExampleTestAnnotationBasedForCurrentSchema.sql",
+              "line": 9
+            },
+            {
+              "path": "examples/RunExpectations.sql",
+              "line": 16
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&ut3_owner",
+          "count": 144,
+          "examples": [
+            {
+              "path": "source/create_grants.sql",
+              "line": 48
+            },
+            {
+              "path": "source/create_grants.sql",
+              "line": 53
+            },
+            {
+              "path": "source/create_grants.sql",
+              "line": 56
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &ut3_user",
+          "count": 122,
+          "examples": [
+            {
+              "path": "source/create_grants.sql",
+              "line": 56
+            },
+            {
+              "path": "source/create_grants.sql",
+              "line": 57
+            },
+            {
+              "path": "source/create_grants.sql",
+              "line": 58
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"xaction_type\" (SQLSTATE 42601)",
+          "count": 53,
+          "examples": [
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 71
+            },
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 73
+            },
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 74
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &action_type",
+          "count": 53,
+          "examples": [
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 72
+            },
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 73
+            },
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 74
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"(\" (SQLSTATE 42601)",
+          "count": 38,
+          "examples": [
+            {
+              "path": "examples/custom_reporters/ut_custom_reporter.tpb",
+              "line": 1
+            },
+            {
+              "path": "examples/custom_reporters/ut_expectations_reporter.tpb",
+              "line": 1
+            },
+            {
+              "path": "source/api/ut.pkb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-opaque",
+          "message": "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales",
+          "count": 25,
+          "examples": [
+            {
+              "path": "examples/annoation_parser_testing/create_test_packages.sql",
+              "line": 30
+            },
+            {
+              "path": "examples/annoation_parser_testing/create_test_packages.sql",
+              "line": 156
+            },
+            {
+              "path": "examples/annoation_parser_testing/create_test_packages.sql",
+              "line": 157
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-unsupported",
+          "message": "El SQL dinámico literal se parseó, pero su tipo de sentencia no está soportado",
+          "count": 13,
+          "examples": [
+            {
+              "path": "source/core/coverage/dbms_plssqlcode.sql",
+              "line": 9
+            },
+            {
+              "path": "source/core/coverage/dbms_plssqlcode.sql",
+              "line": 36
+            },
+            {
+              "path": "source/core/coverage/dbms_plssqlcode.sql",
+              "line": 55
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &ut3_owner_schema",
+          "count": 9,
+          "examples": [
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 30
+            },
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 32
+            },
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 34
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"as\" (SQLSTATE 42601)",
+          "count": 8,
+          "examples": [
+            {
+              "path": "source/expectations/data_values/ut_data_value_refcursor.tpb",
+              "line": 1
+            },
+            {
+              "path": "source/expectations/matchers/ut_be_between.tpb",
+              "line": 1
+            },
+            {
+              "path": "source/expectations/matchers/ut_be_empty.tpb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&line_separator",
+          "count": 8,
+          "examples": [
+            {
+              "path": "source/install.sql",
+              "line": 22
+            },
+            {
+              "path": "source/install.sql",
+              "line": 24
+            },
+            {
+              "path": "source/install.sql",
+              "line": 30
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "carácter condicional no soportado: '.'",
+          "count": 3,
+          "examples": [
+            {
+              "path": "source/expectations/data_values/ut_compound_data_helper.pkb",
+              "line": 791
+            },
+            {
+              "path": "source/expectations/json_objects_specs.sql",
+              "line": 3
+            },
+            {
+              "path": "source/uninstall_objects.sql",
+              "line": 273
+            }
+          ]
+        },
+        {
+          "code": "current-schema",
+          "message": "No se puede determinar CURRENT_SCHEMA; no se resolverán nombres sin esquema",
+          "count": 3,
+          "examples": [
+            {
+              "path": "source/install.sql",
+              "line": 31
+            },
+            {
+              "path": "source/uninstall.sql",
+              "line": 27
+            },
+            {
+              "path": "source/uninstall_all.sql",
+              "line": 27
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"$\" (SQLSTATE 42601)",
+          "count": 3,
+          "examples": [
+            {
+              "path": "source/create_grants.sql",
+              "line": 36
+            },
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 52
+            },
+            {
+              "path": "source/define_ut3_owner_param.sql",
+              "line": 47
+            }
+          ]
+        },
+        {
+          "code": "conditional-compilation",
+          "message": "flag condicional no configurado: $$UT_TRACE",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/core/ut_utils.pkb",
+              "line": 71
+            },
+            {
+              "path": "source/core/ut_utils.pkb",
+              "line": 81
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"-\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/core/coverage/proftab.sql",
+              "line": 38
+            },
+            {
+              "path": "source/core/coverage/proftab.sql",
+              "line": 69
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \".\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/core/ut_suite_manager.pkb",
+              "line": 1
+            },
+            {
+              "path": "source/expectations/data_values/ut_cursor_details.tpb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"by\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "examples/annoation_parser_testing/annotation_parser_test.sql",
+              "line": 8
+            },
+            {
+              "path": "source/core/annotations/ut_annotation_cache_manager.pkb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"member\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/core/annotations/ut_annotation_manager.pkb",
+              "line": 1
+            },
+            {
+              "path": "source/core/ut_suite_tag_filter.pkb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"not\" (SQLSTATE 42601)",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/core/types/ut_logical_suite.tpb",
+              "line": 1
+            },
+            {
+              "path": "source/core/types/ut_suite_item.tpb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&ut3_password",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/install_headless.sql",
+              "line": 20
+            },
+            {
+              "path": "source/install_headless_with_trigger.sql",
+              "line": 20
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&ut3_tablespace",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/install_headless.sql",
+              "line": 20
+            },
+            {
+              "path": "source/install_headless_with_trigger.sql",
+              "line": 20
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &ut3_tablespace",
+          "count": 2,
+          "examples": [
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 30
+            },
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 30
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"'19119 trace name context forever, level 0x8'\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/core/ut_expectation_processor.pkb",
+              "line": 124
+            }
+          ]
+        },
+        {
+          "code": "dynamic-sql-parse",
+          "message": "ERROR: syntax error at or near \"'19119 trace name context off'\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/core/ut_expectation_processor.pkb",
+              "line": 138
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"=>\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "examples/demo_of_expectations/demo_equal_matcher.sql",
+              "line": 56
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"default\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/core/types/ut_executable_test.tpb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"end\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/core/ut_utils.pkb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"of\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/core/ut_suite_cache.sql",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "parse-error",
+          "message": "ERROR: syntax error at or near \"size\" (SQLSTATE 42601)",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/reporters/ut_debug_reporter.tpb",
+              "line": 1
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&1",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/install_component.sql",
+              "line": 20
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&grantee",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/create_synonyms.sql",
+              "line": 69
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&ut3_owner_schema",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 28
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &&ut3_user",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/create_grants.sql",
+              "line": 48
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &1",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 24
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &2",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 25
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &3",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/create_utplsql_owner.sql",
+              "line": 26
+            }
+          ]
+        },
+        {
+          "code": "substitution-unresolved",
+          "message": "Variable SQL*Plus sin valor: &expected_grants",
+          "count": 1,
+          "examples": [
+            {
+              "path": "source/check_sys_grants.sql",
+              "line": 20
+            }
+          ]
+        }
+      ]
+    },
+    "utPLSQL-demo-project": {
+      "measurement": {
+        "label": "utPLSQL-demo-project",
+        "revision": "dec1eb183ccfd6f4027b8ee02ad0b98ec89e7743",
+        "utc": "2026-11-06T13:28:49.662908+00:00",
+        "binary_sha256": "05f4d0e2910e4fcc447950383861c06d056042993835a970e39423fb58c0e9be",
+        "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+        "cpu_count": 28,
+        "jobs": 4,
+        "timeout_seconds": 300,
+        "change_file": null,
+        "runs": {
+          "cold": {
+            "exit_code": 0,
+            "wall_seconds": 0.021417805000965018,
+            "metrics": {
+              "Hits": "0",
+              "Misses": "14",
+              "Invalid": "0",
+              "Writes": "14",
+              "Files": "14",
+              "Lines of code": "337",
+              "Compilation units": "20",
+              "Parsed units": "20",
+              "Degraded units": "0",
+              "Resolved references": "107",
+              "Parse time": "1ms",
+              "Total time": "18ms",
+              "Throughput": "18375 LOC/s",
+              "Peak sampled heap": "1.9 MiB"
+            },
+            "index_sha256": "0b4351bf471efcb9a5afdef8893ca81f4e6118289f96e3205835173cc6c439db",
+            "index_bytes": 24674
+          },
+          "warm": {
+            "exit_code": 0,
+            "wall_seconds": 0.018018709000898525,
+            "metrics": {
+              "Hits": "14",
+              "Misses": "0",
+              "Invalid": "0",
+              "Writes": "0",
+              "Files": "14",
+              "Lines of code": "337",
+              "Compilation units": "20",
+              "Parsed units": "20",
+              "Degraded units": "0",
+              "Resolved references": "107",
+              "Parse time": "1ms",
+              "Total time": "15ms",
+              "Throughput": "22335 LOC/s",
+              "Peak sampled heap": "1.7 MiB"
+            },
+            "index_sha256": "0b4351bf471efcb9a5afdef8893ca81f4e6118289f96e3205835173cc6c439db",
+            "index_bytes": 24674
+          }
+        },
+        "cold_warm_identical": true
+      },
+      "diagnostics": []
+    }
+  }
+}

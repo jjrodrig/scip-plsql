@@ -1,0 +1,2 @@
+CREATE OR REPLACE TYPE n2_address AS OBJECT (street VARCHAR2(50));
+/

@@ -10,6 +10,7 @@ jobs:
     timeout-minutes: 35
     env:
       ORACLE_DSN: oracle://SCIP_TEST:ScipTemp_2026@127.0.0.1:1521/FREEPDB1
+      N2_ADMIN_PASSWORD: ScipTemp_2026
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
