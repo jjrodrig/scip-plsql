@@ -1,0 +1,9 @@
+# Local build output and generated SCIP index
+/scip-plsql
+/index.scip
+
+# Local codebase-memory database and metadata
+/.codebase-memory/
+
+# Optional local document cache
+/.scip-plsql-cache/

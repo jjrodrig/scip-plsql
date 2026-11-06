@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"github.com/jjrodrig/plsql-scip/internal/indexer"
+	"github.com/jjrodrig/scip-plsql/internal/indexer"
 	"os"
 	"runtime/pprof"
 	"strings"

@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/jjrodrig/plsql-scip/internal/indexer"
+	"github.com/jjrodrig/scip-plsql/internal/indexer"
 	"github.com/scip-code/scip/bindings/go/scip"
 	"google.golang.org/protobuf/proto"
 )

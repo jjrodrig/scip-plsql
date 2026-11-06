@@ -1,4 +1,4 @@
-module github.com/jjrodrig/plsql-scip
+module github.com/jjrodrig/scip-plsql
 
 go 1.27.0
 
