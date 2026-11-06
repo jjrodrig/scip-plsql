@@ -1,11 +1,11 @@
 {
     "schema_version": 2,
-    "commit": "",
-    "indexed_at": "2026-11-06T09:48:58Z",
+    "commit": "7498fc07ac7e33673e645741e2d1275dfba81907",
+    "indexed_at": "2026-11-06T11:49:22Z",
     "project": "home-jjrodrig-projects-plsql-scip",
-    "nodes": 711,
-    "edges": 3429,
-    "original_size": 5767168,
-    "compressed_size": 985548,
+    "nodes": 1089,
+    "edges": 4134,
+    "original_size": 8650752,
+    "compressed_size": 1166399,
     "compression_level": 3
 }

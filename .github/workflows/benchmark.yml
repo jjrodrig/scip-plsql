@@ -19,15 +19,16 @@ jobs:
           go-version-file: go.mod
           cache: true
       - run: go build -o "$RUNNER_TEMP/scip-plsql" ./cmd/scip-plsql
+      - run: go build -o "$RUNNER_TEMP/scip-diagnostics" ./cmd/scip-diagnostics
       - name: Prepare N1 pinned sources
         if: matrix.level == 'n1'
         run: python3 tools/corpus.py n1 "$RUNNER_TEMP/corpus"
       - name: Prepare N3 synthetic million lines
         if: matrix.level == 'n3'
         run: python3 tools/corpus.py n3 "$RUNNER_TEMP/corpus"
-      - name: Measure N1
+      - name: Measure N1 repositories separately
         if: matrix.level == 'n1'
-        run: python3 tools/measure.py --binary "$RUNNER_TEMP/scip-plsql" --corpus "$RUNNER_TEMP/corpus" --output "$RUNNER_TEMP/results" --label N1 --revision "manifest-sha256:$(sha256sum corpus/manifest.json | cut -d' ' -f1)"
+        run: python3 tools/measure_n1.py --binary "$RUNNER_TEMP/scip-plsql" --diagnostics-bin "$RUNNER_TEMP/scip-diagnostics" --corpus "$RUNNER_TEMP/corpus" --output "$RUNNER_TEMP/results"
       - name: Measure N3 including one-file change
         if: matrix.level == 'n3'
         run: python3 tools/measure.py --binary "$RUNNER_TEMP/scip-plsql" --corpus "$RUNNER_TEMP/corpus" --output "$RUNNER_TEMP/results" --label N3 --revision '200000 units, 1000 units/file, generator v1' --change workload_00000.sql

@@ -44,6 +44,7 @@ func TestSCIPAcceptance(t *testing.T) {
 		{"basic", []string{"body.sql", "schema.sql"}, 2, 13, []string{"7 assertions", "6 assertions"}},
 		{"types", []string{"types.sql"}, 1, 12, []string{"11 assertions"}},
 		{"object", []string{"object.sql"}, 1, 16, []string{"13 assertions"}},
+		{"sqlplus", []string{"continuation.sql"}, 1, 6, []string{"6 assertions"}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			root, err := filepath.Abs(filepath.Join("testdata", "accept", tc.name))

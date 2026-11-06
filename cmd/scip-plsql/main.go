@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/jjrodrig/plsql-scip/internal/indexer"
 	"os"
+	"runtime/pprof"
 	"strings"
 	"time"
 )
@@ -83,6 +84,7 @@ func runIndex(args []string) error {
 	cache := f.String("cache-dir", "", "optional directory for the SCIP document cache")
 	cacheStats := f.Bool("cache-stats", false, "print cache statistics")
 	showMetrics := f.Bool("metrics", false, "print parsing, resolution, and memory metrics")
+	cpuProfile := f.String("cpu-profile", "", "write a CPU profile to this file")
 	legacyEncoding := f.String("legacy-encoding", "auto", "encoding for non-UTF-8 files: auto, windows-1252, or iso-8859-15")
 	var includes, excludes repeatedString
 	f.Var(&includes, "include", "source path glob to include; repeatable, supports **")
@@ -105,6 +107,17 @@ func runIndex(args []string) error {
 	options := indexer.Options{Root: root, Output: *output, Database: *db, Version: *version, Schema: *schema, SchemaPath: *schemaPath, CCFlags: flags, Catalog: *catalog, MaxTokens: *maxTokens, Workers: *jobs, CacheDir: *cache, CacheStats: &stats, LegacyEncoding: *legacyEncoding, IncludeGlobs: includes, ExcludeGlobs: excludes}
 	if *showMetrics {
 		options.Metrics = &metrics
+	}
+	if *cpuProfile != "" {
+		profile, err := os.Create(*cpuProfile)
+		if err != nil {
+			return fmt.Errorf("create CPU profile: %w", err)
+		}
+		if err := pprof.StartCPUProfile(profile); err != nil {
+			profile.Close()
+			return err
+		}
+		defer func() { pprof.StopCPUProfile(); profile.Close() }()
 	}
 	if err := indexer.Index(options); err != nil {
 		return err

@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--jobs", type=int, default=0)
     parser.add_argument("--timeout", type=int, default=1800)
     parser.add_argument("--change", type=pathlib.Path, help="relative .sql file to modify temporarily for PR measurement")
+    parser.add_argument("--diagnostics-bin", type=pathlib.Path, help="scip-diagnostics binary; save grouped cold-run diagnostics")
     args = parser.parse_args()
     binary, corpus, output = args.binary.resolve(strict=True), args.corpus.resolve(strict=True), args.output.resolve()
     if output == corpus or corpus in output.parents:
@@ -51,13 +52,18 @@ def main():
                 log = result.stdout + result.stderr
                 entry = {"exit_code": result.returncode, "wall_seconds": time.monotonic() - started}
             except subprocess.TimeoutExpired as exc:
-                log = (exc.stdout or b"").decode(errors="replace") + (exc.stderr or b"").decode(errors="replace")
+                def decode(value):
+                    return value.decode(errors="replace") if isinstance(value, bytes) else value or ""
+                log = decode(exc.stdout) + decode(exc.stderr)
                 entry = {"timeout": True, "wall_seconds": time.monotonic() - started}
             (output / (name + ".log")).write_text(log)
             entry["metrics"] = dict(re.findall(r"^\s{2}([^:\n]+):\s*(.+)$", log, re.MULTILINE))
             if index.exists():
                 entry["index_sha256"] = digest(index)
                 entry["index_bytes"] = index.stat().st_size
+                if name == "cold" and args.diagnostics_bin and entry.get("exit_code") == 0:
+                    with (output / "diagnostics.json").open("w") as diagnostics:
+                        subprocess.run([str(args.diagnostics_bin.resolve(strict=True)), str(index)], stdout=diagnostics, check=True, timeout=args.timeout)
             report["runs"][name] = entry
             (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
             if entry.get("exit_code") != 0:

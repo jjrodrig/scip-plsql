@@ -44,6 +44,7 @@ The output defaults to `index.scip` in the current directory. The parser uses `G
 - Loads an optional data dictionary snapshot with `--catalog` to provide external symbols for objects that are not present in the repository.
 - Represents database-link references as external SCIP symbols in a package specific to each link.
 - Preserves source offsets while preprocessing substitution variables and conditional compilation flags.
+- Handles SQL*Plus trailing-hyphen line continuations outside quoted strings and comments, and substitution-variable dot delimiters. As in SQL*Plus, a hyphen at the end of a line is treated as continuation rather than subtraction; move a subtraction operator to the next line. Continuations inside multiline literals remain unsupported.
 - Reports parser and degraded-unit diagnostics in the SCIP index instead of stopping on the first malformed unit.
 - Supports source filters, schema selection, optional document caching, and parsing and memory metrics.
 
@@ -180,8 +181,24 @@ python3 tools/measure.py --binary /tmp/scip-plsql --corpus /tmp/plsql-n1 \
   --revision "manifest-sha256:$(sha256sum corpus/manifest.json | cut -d' ' -f1)"
 ```
 
+To avoid mixing independent schemas, measure each N1 repository separately and
+group its SCIP diagnostics by code and message:
+
+```sh
+go build -o /tmp/scip-diagnostics ./cmd/scip-diagnostics
+python3 tools/measure_n1.py --binary /tmp/scip-plsql \
+  --diagnostics-bin /tmp/scip-diagnostics --corpus /tmp/plsql-n1 \
+  --output /tmp/plsql-n1-results-by-repo --jobs 4
+```
+
+Each repository gets a `report.json` and `diagnostics.json` with counts and up
+to three source locations per message. Diagnostics are occurrences, not a
+count of degraded units: for example ambiguity and dynamic SQL warnings can
+be emitted by units that parsed successfully. The scheduled job uses this
+per-repository mode. Files may still define multiple database schemas.
+
 The eleventh proposed source, alexandria-plsql-utils, remains excluded pending
-license clarification. The combined N1 run shares one catalog across projects;
+license clarification. A combined N1 run shares one catalog across projects;
 it measures robustness and throughput but is not an accuracy measurement for
 the separate projects. The synthetic generator defaults to 200,000 procedures and exactly one
 million physical lines; smaller runs can use `--units` and `--units-per-file`.
@@ -215,6 +232,45 @@ documents and produced byte-identical cold and warm indexes. The N3 million
 line run timed out after 150 seconds with four workers on a shared machine. This
 does not establish the result on the dedicated 16-core machine in the design;
 other compilation and test processes ran during that measurement.
+In the later isolated N3 run, the cold index completed in 149.7 seconds and
+the warm run exceeded the 150-second limit; both used four parser workers.
+
+The `--cpu-profile` index option saves a Go CPU profile. For example, run a
+source twice with the same cache directory, setting a different profile path
+each time, then inspect the warm profile with `go tool pprof -top -cum`. The
+initial isolated N1 profile and per-repository diagnostic baselines are saved
+in `corpus/baselines/`.
+
+### PL/Scope reference smoke test
+
+The local PL/Scope comparison uses the pinned `BETWNSTR` function from
+`utPLSQL-demo-project`. Start a disposable Oracle Free container with a test
+user, build the integration-tagged indexer and comparison tool, and point
+`ORACLE_DSN` at the test user. The script creates/replaces `BETWNSTR` in that
+schema, enables PL/Scope, indexes the original source and writes identifiers and
+a comparison report:
+
+```sh
+docker run -d --rm --name oracle-test -p 127.0.0.1:1521:1521 \
+  -e ORACLE_PASSWORD=TestPass123 -e APP_USER=SCIP_TEST \
+  -e APP_USER_PASSWORD=TestPass123 gvenzl/oracle-free:23-slim-faststart
+# Wait until: docker exec oracle-test healthcheck.sh
+go build -tags integration -o /tmp/scip-plsql-oracle ./cmd/scip-plsql
+go build -o /tmp/scip-plscope-compare ./cmd/scip-plscope-compare
+ORACLE_DSN='oracle://SCIP_TEST:TestPass123@127.0.0.1:1521/FREEPDB1' \
+  python3 tools/plscope_demo.py --container oracle-test --corpus /tmp/plsql-n1 \
+  --binary /tmp/scip-plsql-oracle --compare-bin /tmp/scip-plscope-compare \
+  --output /tmp/plscope-results
+docker stop oracle-test
+```
+
+The comparator checks whether a PL/Scope signature's usages at matching source
+positions point to the same SCIP symbol as its declaration. It reports built-in
+or otherwise undeclared signatures as `unanchored`; it does not establish the
+correctness of the declaration's target, compare access roles, or claim corpus
+accuracy. It accounts for Oracle removing `CREATE OR REPLACE` from the first
+stored source line. The initial one-function result is in
+`corpus/baselines/plscope-demo-local-2026-11-06.json`.
 
 ## Current limitations
 

@@ -130,6 +130,19 @@ func preprocess(text string, flags map[string]string) (string, []preprocessDiagn
 			i++
 			continue
 		}
+		// SQL*Plus removes a trailing hyphen before passing continued input
+		// to Oracle. Keep the newline and byte positions for SCIP ranges.
+		if text[i] == '-' {
+			j := i + 1
+			for j < len(text) && (text[j] == ' ' || text[j] == '\t' || text[j] == '\r') {
+				j++
+			}
+			if j < len(text) && text[j] == '\n' {
+				out[i] = ' '
+				i++
+				continue
+			}
+		}
 		if text[i] == '&' {
 			j := i + 1
 			if j < len(text) && text[j] == '&' {
@@ -142,6 +155,15 @@ func preprocess(text string, flags map[string]string) (string, []preprocessDiagn
 			if j > startName {
 				for k := i; k < startName; k++ {
 					out[k] = 'x'
+				}
+				// SQL*Plus consumes the first dot as the variable-name
+				// delimiter. A second dot remains the SQL qualifier.
+				if j < len(text) && text[j] == '.' {
+					out[j] = ' '
+					if j+1 < len(text) && isSubName(text[j+1]) {
+						out[j] = 'x'
+					}
+					j++
 				}
 				i = j
 				continue

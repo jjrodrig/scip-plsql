@@ -66,6 +66,47 @@ SELECT '&literal', q'[&quoted $IF $$x $THEN]', "&identifier", &first, &&second F
 		t.Fatalf("got %q want %q", got, want)
 	}
 }
+
+func TestSQLPlusContinuationAndSubstitutionDelimiter(t *testing.T) {
+	input := "INSERT INTO &owner..products VALUES(1-\n,'a-'||-\n'b');\n-- comment -\nSELECT q'[literal-\nvalue]' FROM dual;\nSELECT &part.suffix FROM dual;\n"
+	want := "INSERT INTO xowner .products VALUES(1 \n,'a-'|| \n'b');\n-- comment -\nSELECT q'[literal-\nvalue]' FROM dual;\nSELECT xpartxsuffix FROM dual;\n"
+	got, diagnostics := preprocess(input, nil)
+	if got != want || len(diagnostics) != 0 {
+		t.Fatalf("got %q, diagnostics %v; want %q", got, diagnostics, want)
+	}
+}
+
+func TestIndexSQLPlusContinuedInsert(t *testing.T) {
+	root := t.TempDir()
+	sql := "CREATE TABLE products (id NUMBER, name VARCHAR2(50));\nINSERT INTO products (id, name) VALUES(1-\n, 'a'||-\n'b');\n"
+	if err := os.WriteFile(filepath.Join(root, "a.sql"), []byte(sql), 0600); err != nil {
+		t.Fatal(err)
+	}
+	var metrics Metrics
+	if err := Index(Options{Root: root, Output: "index.scip", Database: "demo", Version: "1", Schema: "HR", Metrics: &metrics}); err != nil {
+		t.Fatal(err)
+	}
+	if metrics.DegradedUnits != 0 || metrics.ParsedUnits != 2 {
+		t.Fatalf("metrics: %+v", metrics)
+	}
+	b, err := os.ReadFile(filepath.Join(root, "index.scip"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var idx scip.Index
+	if err := proto.Unmarshal(b, &idx); err != nil {
+		t.Fatal(err)
+	}
+	var references int
+	for _, o := range idx.Documents[0].Occurrences {
+		if o.Symbol == "scip-plsql oracle demo 1 HR/PRODUCTS#ID." && o.SymbolRoles&int32(scip.SymbolRole_WriteAccess) != 0 {
+			references++
+		}
+	}
+	if references != 1 {
+		t.Fatalf("expected one write to products.id, got %d", references)
+	}
+}
 func TestPreprocessUnknownFlagDoesNotChooseElse(t *testing.T) {
 	in := "$IF $$missing $THEN\nCREATE TABLE a (x NUMBER);\n$ELSE\nCREATE TABLE b (x NUMBER);\n$END\n"
 	got, diags := preprocess(in, nil)
