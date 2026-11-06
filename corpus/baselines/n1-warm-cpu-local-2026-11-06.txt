@@ -1,0 +1,34 @@
+File: plsql-after
+Build ID: 62036d00179d8939edcc8a024d960b5848dedec8
+Type: cpu
+Time: 2026-11-06 12:06:31 CET
+Duration: 6.24s, Total samples = 7.34s (117.58%)
+Showing nodes accounting for 2.20s, 29.97% of 7.34s total
+Dropped 278 nodes (cum <= 0.04s)
+Showing top 25 nodes out of 198
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%      5.29s 72.07%  github.com/jjrodrig/plsql-scip/internal/indexer.Index
+         0     0%     0%      5.29s 72.07%  main.main
+         0     0%     0%      5.29s 72.07%  main.runIndex
+         0     0%     0%      5.29s 72.07%  runtime.main
+     0.01s  0.14%  0.14%      4.60s 62.67%  github.com/jjrodrig/plsql-scip/internal/indexer.(*state).write
+         0     0%  0.14%      4.41s 60.08%  github.com/jjrodrig/plsql-scip/internal/indexer.(*documentCache).key
+     0.02s  0.27%  0.41%      4.34s 59.13%  github.com/jjrodrig/plsql-scip/internal/indexer.(*state).catalogFingerprintForSource
+     0.07s  0.95%  1.36%      3.66s 49.86%  github.com/jjrodrig/plsql-scip/internal/indexer.keyUsesIdentifier
+     0.05s  0.68%  2.04%      2.22s 30.25%  github.com/jjrodrig/plsql-scip/internal/indexer.identifierMatches
+     0.34s  4.63%  6.68%      1.51s 20.57%  runtime.mapaccess1_faststr
+     0.17s  2.32%  8.99%      1.01s 13.76%  runtime.mallocgc
+     0.06s  0.82%  9.81%      0.92s 12.53%  strings.(*Builder).WriteString (inline)
+         0     0%  9.81%      0.91s 12.40%  runtime.systemstack
+     0.06s  0.82% 10.63%      0.90s 12.26%  runtime.growslice
+     0.04s  0.54% 11.17%      0.79s 10.76%  github.com/jjrodrig/plsql-scip/internal/indexer.(*state).parseUnits.func2
+         0     0% 11.17%      0.73s  9.95%  runtime.gcBgMarkWorker
+     0.01s  0.14% 11.31%      0.72s  9.81%  github.com/bytebase/omni/oracle/parser.ParseRange
+         0     0% 11.31%      0.72s  9.81%  github.com/jjrodrig/plsql-scip/internal/indexer.parseRange
+         0     0% 11.31%      0.72s  9.81%  runtime.gcBgMarkWorker.func2
+     0.04s  0.54% 11.85%      0.72s  9.81%  runtime.gcDrain
+     0.63s  8.58% 20.44%      0.70s  9.54%  strings.ToUpper
+     0.67s  9.13% 29.56%      0.67s  9.13%  aeshashbody
+         0     0% 29.56%      0.56s  7.63%  runtime.gcDrainMarkWorkerDedicated (inline)
+         0     0% 29.56%      0.56s  7.63%  runtime.scanSpan
+     0.03s  0.41% 29.97%      0.52s  7.08%  github.com/jjrodrig/plsql-scip/internal/indexer.Index.func2

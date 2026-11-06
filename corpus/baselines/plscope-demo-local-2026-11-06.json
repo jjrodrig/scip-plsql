@@ -1,0 +1,156 @@
+{
+  "source": "utPLSQL-demo-project/source/between_string/R__ut3_demo.betwnstr.fnc",
+  "commit": "dec1eb183ccfd6f4027b8ee02ad0b98ec89e7743",
+  "source_sha256": "0f940c60b2ee5324b344d0fa8f67ae440ab5a9b3a469e879c06029e9700d42ab",
+  "oracle_image": "gvenzl/oracle-free:23-slim-faststart",
+  "image_digest": "sha256:f5ff19033860d662c821cb04eb10483fa94f14f78eae252d054291ea07028093",
+  "first_line_prefix_characters": 18,
+  "comparison": {
+    "counts": {
+      "matched": 14,
+      "unanchored": 6
+    },
+    "items": [
+      {
+        "name": "BETWNSTR",
+        "usage": "DECLARATION",
+        "line": 1,
+        "column": 10,
+        "status": "matched"
+      },
+      {
+        "name": "BETWNSTR",
+        "usage": "DEFINITION",
+        "line": 1,
+        "column": 10,
+        "status": "matched"
+      },
+      {
+        "name": "A_STRING",
+        "usage": "DECLARATION",
+        "line": 1,
+        "column": 20,
+        "status": "matched"
+      },
+      {
+        "name": "VARCHAR2",
+        "usage": "REFERENCE",
+        "line": 1,
+        "column": 29,
+        "status": "unanchored"
+      },
+      {
+        "name": "A_START_POS",
+        "usage": "DECLARATION",
+        "line": 1,
+        "column": 39,
+        "status": "matched"
+      },
+      {
+        "name": "INTEGER",
+        "usage": "REFERENCE",
+        "line": 1,
+        "column": 51,
+        "status": "unanchored"
+      },
+      {
+        "name": "A_END_POS",
+        "usage": "DECLARATION",
+        "line": 1,
+        "column": 60,
+        "status": "matched"
+      },
+      {
+        "name": "INTEGER",
+        "usage": "REFERENCE",
+        "line": 1,
+        "column": 70,
+        "status": "unanchored"
+      },
+      {
+        "name": "VARCHAR2",
+        "usage": "REFERENCE",
+        "line": 1,
+        "column": 87,
+        "status": "unanchored"
+      },
+      {
+        "name": "L_START_POS",
+        "usage": "DECLARATION",
+        "line": 2,
+        "column": 3,
+        "status": "matched"
+      },
+      {
+        "name": "L_START_POS",
+        "usage": "ASSIGNMENT",
+        "line": 2,
+        "column": 3,
+        "status": "matched"
+      },
+      {
+        "name": "PLS_INTEGER",
+        "usage": "REFERENCE",
+        "line": 2,
+        "column": 15,
+        "status": "unanchored"
+      },
+      {
+        "name": "A_START_POS",
+        "usage": "REFERENCE",
+        "line": 2,
+        "column": 30,
+        "status": "matched"
+      },
+      {
+        "name": "L_START_POS",
+        "usage": "REFERENCE",
+        "line": 4,
+        "column": 6,
+        "status": "matched"
+      },
+      {
+        "name": "L_START_POS",
+        "usage": "ASSIGNMENT",
+        "line": 5,
+        "column": 5,
+        "status": "matched"
+      },
+      {
+        "name": "SUBSTR",
+        "usage": "CALL",
+        "line": 7,
+        "column": 10,
+        "status": "unanchored"
+      },
+      {
+        "name": "A_STRING",
+        "usage": "REFERENCE",
+        "line": 7,
+        "column": 18,
+        "status": "matched"
+      },
+      {
+        "name": "L_START_POS",
+        "usage": "REFERENCE",
+        "line": 7,
+        "column": 28,
+        "status": "matched"
+      },
+      {
+        "name": "A_END_POS",
+        "usage": "REFERENCE",
+        "line": 7,
+        "column": 41,
+        "status": "matched"
+      },
+      {
+        "name": "L_START_POS",
+        "usage": "REFERENCE",
+        "line": 7,
+        "column": 53,
+        "status": "matched"
+      }
+    ]
+  }
+}

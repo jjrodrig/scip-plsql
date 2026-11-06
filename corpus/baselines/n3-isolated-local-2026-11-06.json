@@ -1,0 +1,40 @@
+{
+  "label": "N3-isolated",
+  "revision": "200000 units, 1000 units/file, generator v1",
+  "utc": "2026-11-06T11:07:22.610294+00:00",
+  "binary_sha256": "41b6926140c1dc06a9707cdd7bd3ea9e675e6b496a765da40435943984cb660e",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cpu_count": 28,
+  "jobs": 4,
+  "timeout_seconds": 150,
+  "change_file": "workload_00000.sql",
+  "runs": {
+    "cold": {
+      "exit_code": 0,
+      "wall_seconds": 149.7106453860033,
+      "metrics": {
+        "Hits": "0",
+        "Misses": "200",
+        "Invalid": "0",
+        "Writes": "200",
+        "Files": "200",
+        "Lines of code": "1000200",
+        "Compilation units": "200000",
+        "Parsed units": "200000",
+        "Degraded units": "0",
+        "Resolved references": "0",
+        "Parse time": "517ms",
+        "Total time": "2m29.684s",
+        "Throughput": "6682 LOC/s",
+        "Peak sampled heap": "814.0 MiB"
+      },
+      "index_sha256": "c5e4a1ccd5e3ad9a3136e520f72b6d5fa0e27abc42ec919aa5b07ac04bb175dc",
+      "index_bytes": 30746815
+    },
+    "warm": {
+      "timeout": true,
+      "wall_seconds": 150.13128031299857,
+      "metrics": {}
+    }
+  }
+}
