@@ -10,8 +10,12 @@ import (
 // becomes a numeric literal so it cannot be mistaken for a SQL column.
 const miningIdentifier = `(?:"(?:[^"]|"")*"|[A-Z_][A-Z0-9_$#]*)`
 const miningQualified = miningIdentifier + `(?:\s*\.\s*` + miningIdentifier + `)?`
+const miningLiteral = `(?:[0-9]+(?:\.[0-9]+)?|'(?:[^']|'')*')`
+const miningFeature = `(?:` + miningQualified + `|` + miningLiteral + `)(?:\s+AS\s+` + miningIdentifier + `)?`
 
-var miningWildcard = regexp.MustCompile(`(?i)^(PREDICTION|PREDICTION_PROBABILITY|PREDICTION_DETAILS|PREDICTION_SET|PREDICTION_COST|CLUSTER_ID|CLUSTER_PROBABILITY|CLUSTER_DETAILS|FEATURE_ID|FEATURE_VALUE|FEATURE_DETAILS)\s*\(\s*(` + miningQualified + `)\s*(?:,\s*(?:[0-9]+(?:\.[0-9]+)?|'(?:[^']|'')*'))?\s+(USING)\s*(?:\*|` + miningQualified + `(?:\s*,\s*` + miningQualified + `)*)\s*\)`)
+var miningWildcard = regexp.MustCompile(`(?i)^(PREDICTION|PREDICTION_PROBABILITY|PREDICTION_DETAILS|PREDICTION_SET|PREDICTION_COST|PREDICTION_BOUNDS|CLUSTER_ID|CLUSTER_PROBABILITY|CLUSTER_DETAILS|FEATURE_ID|FEATURE_VALUE|FEATURE_DETAILS)\s*\(\s*((?:OF\s+ANOMALY|` + miningQualified + `))(?:\s+COST\s+MODEL)?\s*(?:,\s*` + miningLiteral + `){0,2}(?:\s+COST\s+MODEL)?\s+(USING)\s*(?:\*|` + miningFeature + `(?:\s*,\s*` + miningFeature + `)*)\s*\)`)
+var miningAlias = regexp.MustCompile(`(?i)^AS\s+` + miningIdentifier)
+var miningCost = regexp.MustCompile(`(?i)^COST\s+MODEL\b`)
 
 func preprocessMining(text string) (string, []preprocessDiagnostic) {
 	out := []byte(text)
@@ -56,9 +60,48 @@ func preprocessMining(text string) (string, []preprocessDiagnostic) {
 			}
 		}
 		out[modelStart] = '0'
+		for j := modelEnd; j < usingStart; {
+			if end, ok := lexicalIsland(text, j); ok {
+				j = end
+				continue
+			}
+			if cost := miningCost.FindStringIndex(text[j:usingStart]); cost != nil {
+				for k := j; k < j+cost[1]; k++ {
+					if out[k] != '\n' && out[k] != '\r' {
+						out[k] = ' '
+					}
+				}
+				j += cost[1]
+				continue
+			}
+			j++
+		}
 		out[usingStart] = ','
 		for j := usingStart + 1; j < usingEnd; j++ {
 			out[j] = ' '
+		}
+		for j := usingEnd; j < a+m[1]; {
+			if end, ok := lexicalIsland(text, j); ok {
+				j = end
+				continue
+			}
+			raw, start, end := tokenAt(text, j)
+			if raw == "" {
+				j++
+				continue
+			}
+			if strings.EqualFold(raw, "AS") {
+				if alias := miningAlias.FindStringIndex(text[start : a+m[1]]); alias != nil {
+					for k := start; k < start+alias[1]; k++ {
+						if out[k] != '\n' && out[k] != '\r' {
+							out[k] = ' '
+						}
+					}
+					j = start + alias[1]
+					continue
+				}
+			}
+			j = end
 		}
 		diagnostics = append(diagnostics, preprocessDiagnostic{modelStart, modelEnd, "No se resuelve el modelo de minería Oracle"})
 		i = a + m[1]

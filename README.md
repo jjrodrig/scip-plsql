@@ -45,7 +45,7 @@ The output defaults to `index.scip` in the current directory. The parser uses `G
 - Represents database-link references as external SCIP symbols in a package specific to each link.
 - Preserves source offsets while preprocessing substitution variables and conditional compilation flags.
 - Handles SQL*Plus trailing-hyphen continuations, including continued literal SQL passed to `EXECUTE IMMEDIATE`, and substitution-variable dot delimiters. As in SQL*Plus, a hyphen at the end of a line is treated as continuation rather than subtraction; move a subtraction operator to the next line. Static SQL literal values are not evaluated.
-- Parses a conservative subset of Oracle mining expressions with `USING *` or simple column lists, preserving surrounding references. Mining model names themselves are not resolved and produce a diagnostic; other mining forms may still degrade.
+- Parses a conservative subset of Oracle mining expressions with `USING *`, simple column or literal lists, `AS` aliases, inline anomaly and `COST MODEL`, preserving surrounding references. Mining model names themselves are not resolved and produce a diagnostic; other mining forms may still degrade.
 - Reports parser and degraded-unit diagnostics in the SCIP index instead of stopping on the first malformed unit.
 - Supports source filters, schema selection, optional document caching, and parsing and memory metrics.
 
@@ -276,6 +276,34 @@ correctness of the declaration's target, compare access roles, or claim corpus
 accuracy. It accounts for Oracle removing `CREATE OR REPLACE` from the first
 stored source line. The three-object result is in
 `corpus/baselines/plscope-expanded-local-2026-11-06.json`.
+
+### N2: packages, SQL and external catalog
+
+The separate `corpus/n2/fixtures` scenario creates a package spec and body
+with overloads, nested scopes and embedded SQL, plus a caller and a table that
+exists only in Oracle and the exported catalog, not the indexed source tree.
+`scip-n2-compare` joins PL/Scope signatures across documents. Explicit fixture
+anchors check the expected package, both overloads and table/column symbols;
+other declarations are used as consistency anchors. Oracle reports both sides
+of an SQL column assignment as `REFERENCE`, so the two read/write expectations
+on `BALANCE` are specified explicitly in the fixture rather than inferred from
+that PL/Scope usage. Some built-ins remain unanchored.
+
+With a running disposable Oracle Free container and a **clean** schema, run:
+
+```sh
+go build -tags integration -o /tmp/scip-plsql-oracle ./cmd/scip-plsql
+go build -o /tmp/scip-n2-compare ./cmd/scip-n2-compare
+ORACLE_DSN='oracle://SCIP_TEST:TestPass123@127.0.0.1:1521/FREEPDB1' \
+  python3 tools/run_n2.py --container oracle-test --binary /tmp/scip-plsql-oracle \
+  --compare-bin /tmp/scip-n2-compare --output /tmp/n2-results --check
+```
+
+`--check` enforces the current small-fixture baseline and validates the explicit
+anchors and roles; it is not a general accuracy threshold. The weekly/manual
+`.github/workflows/n2.yml` job runs this scenario and the pinned utPLSQL demo,
+then uploads reports. The first local result is
+`corpus/baselines/n2-fixture-local-2026-11-06.json`.
 
 ## Current limitations
 

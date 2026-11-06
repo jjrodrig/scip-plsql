@@ -1,0 +1,51 @@
+name: Oracle PL-Scope N2
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 3 * * 0'
+
+jobs:
+  oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      ORACLE_DSN: oracle://SCIP_TEST:ScipTemp_2026@127.0.0.1:1521/FREEPDB1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Start disposable Oracle Free
+        run: |
+          docker run -d --rm --name scip-n2 -p 127.0.0.1:1521:1521 \
+            -e ORACLE_PASSWORD=ScipTemp_2026 -e APP_USER=SCIP_TEST \
+            -e APP_USER_PASSWORD=ScipTemp_2026 \
+            gvenzl/oracle-free:23-slim-faststart@sha256:f5ff19033860d662c821cb04eb10483fa94f14f78eae252d054291ea07028093
+          for i in $(seq 1 90); do
+            if docker exec scip-n2 healthcheck.sh >/dev/null 2>&1; then exit 0; fi
+            sleep 5
+          done
+          docker logs scip-n2
+          exit 1
+      - name: Build tools
+        run: |
+          go build -tags integration -o "$RUNNER_TEMP/scip-plsql" ./cmd/scip-plsql
+          go build -o "$RUNNER_TEMP/scip-n2-compare" ./cmd/scip-n2-compare
+          go build -o "$RUNNER_TEMP/scip-plscope-compare" ./cmd/scip-plscope-compare
+      - name: Compare package, overloads and external objects
+        run: python3 tools/run_n2.py --container scip-n2 --binary "$RUNNER_TEMP/scip-plsql" --compare-bin "$RUNNER_TEMP/scip-n2-compare" --output "$RUNNER_TEMP/n2/fixture" --check
+      - name: Compare the pinned utPLSQL demo
+        run: |
+          python3 tools/corpus.py n1 "$RUNNER_TEMP/corpus" --source utPLSQL-demo-project
+          python3 tools/plscope_demo.py --container scip-n2 --corpus "$RUNNER_TEMP/corpus" --binary "$RUNNER_TEMP/scip-plsql" --compare-bin "$RUNNER_TEMP/scip-plscope-compare" --output "$RUNNER_TEMP/n2/utplsql-demo"
+      - name: Upload N2 reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plscope-n2
+          path: ${{ runner.temp }}/n2
+          if-no-files-found: warn
+      - name: Stop Oracle
+        if: always()
+        run: docker stop scip-n2 || true

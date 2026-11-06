@@ -1,0 +1,6 @@
+{
+  "objects": [{
+    "schema": "SYS", "name": "DBMS_OUTPUT", "kind": "package",
+    "members": [{"name": "PUT_LINE", "kind": "procedure", "parameters": [{"name": "A", "type": "VARCHAR2", "mode": "IN"}]}]
+  }, {"schema": "PUBLIC", "name": "DBMS_OUTPUT", "kind": "synonym", "target": {"schema": "SYS", "name": "DBMS_OUTPUT"}}]
+}
