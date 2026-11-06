@@ -6,17 +6,18 @@ on:
 
 jobs:
   oracle:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
       ORACLE_DSN: oracle://SCIP_TEST:ScipTemp_2026@127.0.0.1:1521/FREEPDB1
       N2_ADMIN_PASSWORD: ScipTemp_2026
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
           cache: true
+          cache-dependency-path: go.sum
       - name: Start disposable Oracle Free
         run: |
           docker run -d --rm --name scip-n2 -p 127.0.0.1:1521:1521 \
@@ -42,7 +43,7 @@ jobs:
           python3 tools/plscope_demo.py --container scip-n2 --corpus "$RUNNER_TEMP/corpus" --binary "$RUNNER_TEMP/scip-plsql" --compare-bin "$RUNNER_TEMP/scip-plscope-compare" --output "$RUNNER_TEMP/n2/utplsql-demo"
       - name: Upload N2 reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: plscope-n2
           path: ${{ runner.temp }}/n2

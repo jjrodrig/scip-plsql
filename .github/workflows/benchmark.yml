@@ -10,14 +10,15 @@ jobs:
       fail-fast: false
       matrix:
         level: [n1, n3]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
           cache: true
+          cache-dependency-path: go.sum
       - run: go build -o "$RUNNER_TEMP/scip-plsql" ./cmd/scip-plsql
       - run: go build -o "$RUNNER_TEMP/scip-diagnostics" ./cmd/scip-diagnostics
       - name: Prepare N1 pinned sources
@@ -34,7 +35,7 @@ jobs:
         run: python3 tools/measure.py --binary "$RUNNER_TEMP/scip-plsql" --corpus "$RUNNER_TEMP/corpus" --output "$RUNNER_TEMP/results" --label N3 --revision '200000 units, 1000 units/file, generator v1' --change workload_00000.sql
       - name: Upload results even on failure
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: corpus-${{ matrix.level }}
           path: ${{ runner.temp }}/results
