@@ -5,7 +5,70 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/sourcegraph/scip/bindings/go/scip"
+	"google.golang.org/protobuf/proto"
 )
+
+func TestCachePreservesRemoteSymbolsAcrossDocuments(t *testing.T) {
+	root := t.TempDir()
+	for filename, text := range map[string]string{
+		"a.sql": "SELECT id FROM HR.EMP@remote_db;\nBEGIN HR.PKG.PROC@remote_db; END;\n",
+		"b.sql": "SELECT id FROM hr.emp@remote_db;\nBEGIN hr.pkg.proc@remote_db; END;\n",
+	} {
+		if err := os.WriteFile(filepath.Join(root, filename), []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var stats CacheStats
+	opts := Options{Root: root, Output: filepath.Join(t.TempDir(), "out.scip"), Database: "demo", Version: "1", Schema: "HR", CacheDir: filepath.Join(t.TempDir(), "cache"), CacheStats: &stats}
+	run := func() []byte {
+		t.Helper()
+		if err := Index(opts); err != nil {
+			t.Fatal(err)
+		}
+		data, err := os.ReadFile(opts.Output)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return data
+	}
+	cold := run()
+	var index scip.Index
+	if err := proto.Unmarshal(cold, &index); err != nil {
+		t.Fatal(err)
+	}
+	if len(index.ExternalSymbols) < 3 {
+		t.Fatalf("expected remote symbols, got %d", len(index.ExternalSymbols))
+	}
+	warm := run()
+	if !bytes.Equal(cold, warm) || stats.Hits != 2 || stats.Misses != 0 {
+		t.Fatalf("warm cache: %+v equal=%v", stats, bytes.Equal(cold, warm))
+	}
+	if err := os.WriteFile(filepath.Join(root, "a.sql"), []byte("SELECT 1 FROM dual;\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	mixed := run()
+	if stats.Hits != 1 || stats.Misses != 1 {
+		t.Fatalf("mixed cache: %+v", stats)
+	}
+	opts.CacheDir = ""
+	fresh := run()
+	if !bytes.Equal(mixed, fresh) {
+		t.Fatal("mixed cached and fresh documents lost external symbols")
+	}
+	opts.CacheDir = filepath.Join(t.TempDir(), "other-cache")
+	run()
+	opts.Version = "2"
+	changedVersion := run()
+	if stats.Misses != 2 {
+		t.Fatalf("package version change must invalidate remote symbols: %+v", stats)
+	}
+	opts.CacheDir = ""
+	if !bytes.Equal(changedVersion, run()) {
+		t.Fatal("package version change reused stale symbols")
+	}
+}
 
 func TestDocumentCacheInvalidationAndCorruption(t *testing.T) {
 	root := t.TempDir()

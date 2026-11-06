@@ -1,0 +1,17 @@
+{
+  "label": "N3",
+  "revision": "200000 units, 1000 units/file, generator v1",
+  "utc": "2026-11-06T10:16:05.536239+00:00",
+  "binary_sha256": "04e155159090f23abd9c9f5be677269461edd41762e3f2467df180016ebf4eab",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cpu_count": 28,
+  "jobs": 4,
+  "timeout_seconds": 150,
+  "runs": {
+    "cold": {
+      "timeout": true,
+      "wall_seconds": 150.0526418149966,
+      "metrics": {}
+    }
+  }
+}

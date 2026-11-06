@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "name": "oracle-db-examples",
+      "url": "https://github.com/oracle-samples/oracle-db-examples.git",
+      "commit": "f1b90ba5da8f23b9b323d5929d3a18475b837a3b",
+      "license": "Apache-2.0",
+      "level": "N1"
+    },
+    {"name": "db-sample-schemas", "url": "https://github.com/oracle-samples/db-sample-schemas.git", "commit": "6660bad68c07bd143430ace58565b3f727e17263", "license": "MIT", "level": "N1"},
+    {"name": "utPLSQL", "url": "https://github.com/utPLSQL/utPLSQL.git", "commit": "bbcedf130f42bc6648b425c82258121e36afdbf5", "license": "Apache-2.0", "level": "N1"},
+    {"name": "pljson", "url": "https://github.com/pljson/pljson.git", "commit": "09a54e4e9318af36c6d27f0e7170bd4a376276b2", "license": "MIT", "level": "N1"},
+    {"name": "Logger", "url": "https://github.com/OraOpenSource/Logger.git", "commit": "600f0c44cd0cc7f064776d31de50e9006d3476c4", "license": "MIT", "level": "N1"},
+    {"name": "console", "url": "https://github.com/ogobrecht/console.git", "commit": "72ff8f8508feb76f4496bfacd4aa6f001cf97e02", "license": "MIT", "level": "N1"},
+    {"name": "plex", "url": "https://github.com/ogobrecht/plex.git", "commit": "3b13e44dae443d6033e5b4ceedd5d0de1b284716", "license": "MIT", "level": "N1"},
+    {"name": "OOS-Utils", "url": "https://github.com/OraOpenSource/OOS-Utils.git", "commit": "b6217292bc744211eaee9e1d11ca7a0b495bc44d", "license": "MIT", "level": "N1"},
+    {"name": "tePLSQL", "url": "https://github.com/osalvador/tePLSQL.git", "commit": "1480866d15c1312183a938d13e629cd6ba3f3747", "license": "MIT", "level": "N1"},
+    {"name": "utPLSQL-demo-project", "url": "https://github.com/utPLSQL/utPLSQL-demo-project.git", "commit": "dec1eb183ccfd6f4027b8ee02ad0b98ec89e7743", "license": "Apache-2.0", "level": "N1"}
+  ]
+}

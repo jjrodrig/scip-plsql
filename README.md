@@ -157,6 +157,65 @@ SCIP_BIN=/path/to/scip go test ./...
 
 When `scip` is unavailable and `SCIP_BIN` is unset, those CLI-backed checks are skipped.
 
+CI installs the official SCIP CLI at `v0.5.2` and runs the acceptance tests,
+the race detector and the integration-tagged build. The integration build only
+checks compilation and tests; it does not connect to an Oracle server.
+
+## Reproducible corpus measurements
+
+`corpus/manifest.json` pins ten N1 sources by commit. Materialize them from
+GitHub, or use local checkouts at those exact commits (only tracked files from
+each commit are included):
+
+```sh
+python3 tools/corpus.py n1 /tmp/plsql-n1
+# Offline alternative: one checkout per manifest name under the directory:
+python3 tools/corpus.py n1 /tmp/plsql-n1 --local-root /path/to/checkouts
+# Select one source and use a specific local checkout:
+python3 tools/corpus.py n1 /tmp/plsql-n1-single --source oracle-db-examples \
+  --local /path/to/oracle-db-examples
+go build -o /tmp/scip-plsql ./cmd/scip-plsql
+python3 tools/measure.py --binary /tmp/scip-plsql --corpus /tmp/plsql-n1 \
+  --output /tmp/plsql-n1-results --label N1 \
+  --revision "manifest-sha256:$(sha256sum corpus/manifest.json | cut -d' ' -f1)"
+```
+
+The eleventh proposed source, alexandria-plsql-utils, remains excluded pending
+license clarification. The combined N1 run shares one catalog across projects;
+it measures robustness and throughput but is not an accuracy measurement for
+the separate projects. The synthetic generator defaults to 200,000 procedures and exactly one
+million physical lines; smaller runs can use `--units` and `--units-per-file`.
+It is a simple throughput workload, not representative of all N3 features such
+as large packages, encodings or cross-schema dependencies.
+
+```sh
+python3 tools/corpus.py n3 /tmp/plsql-n3
+python3 tools/measure.py --binary /tmp/scip-plsql --corpus /tmp/plsql-n3 \
+  --output /tmp/plsql-n3-results --label N3 \
+  --revision '200000 units, 1000 units/file, generator v1' \
+  --change workload_00000.sql
+```
+
+Measurements use a fresh cache, record cold and warm runs, compare index hashes,
+and optionally measure an added statement in one synthetic file; the original
+file is restored afterward. Results and raw logs are saved outside the corpus.
+The indexer's reported peak is sampled Go heap, not process RSS; its line count
+includes a final empty line per file ending in a newline. A changed-file run is
+a small controlled edit, not a representative PR. Use `--jobs 16` on a dedicated
+16-core machine to assess the design target. Timing varies with hardware and
+load; no performance gate is set until a stable baseline exists. The scheduled
+workflow uploads the reports even when a run fails. It does not yet compare
+against a historical baseline or run `benchstat`.
+
+Initial local results are recorded in `corpus/baselines/`. The original N1
+baseline exposed a cache issue with database-link symbols; those historical
+results predate its correction. The measurement fails if cold and warm index
+hashes differ. The expanded local N1 baseline after the fix reused all 2,159
+documents and produced byte-identical cold and warm indexes. The N3 million
+line run timed out after 150 seconds with four workers on a shared machine. This
+does not establish the result on the dedicated 16-core machine in the design;
+other compilation and test processes ran during that measurement.
+
 ## Current limitations
 
 - Resolution is best-effort; unresolved or unsupported syntax can produce diagnostics or incomplete references. An absent reference does not prove that the name is undefined.

@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Install official SCIP CLI
+        # SCIP v0.5.2's Sonic dependency does not link with Go 1.26.
+        run: GOTOOLCHAIN=go1.23.12 go install github.com/sourcegraph/scip/cmd/scip@v0.5.2
+      - name: Go and SCIP acceptance tests
+        run: SCIP_BIN="$(go env GOPATH)/bin/scip" go test -count=1 ./...
+      - name: Race detector
+        run: SCIP_BIN="$(go env GOPATH)/bin/scip" go test -race -count=1 ./...
+      - name: Build and test Oracle integration tag
+        run: go test -tags integration -count=1 ./...
+      - name: Corpus tooling tests
+        run: python3 -m unittest discover -s tools -p 'test_*.py'

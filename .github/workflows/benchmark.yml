@@ -1,0 +1,40 @@
+name: Corpus baseline
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * *'
+
+jobs:
+  corpus:
+    strategy:
+      fail-fast: false
+      matrix:
+        level: [n1, n3]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - run: go build -o "$RUNNER_TEMP/scip-plsql" ./cmd/scip-plsql
+      - name: Prepare N1 pinned sources
+        if: matrix.level == 'n1'
+        run: python3 tools/corpus.py n1 "$RUNNER_TEMP/corpus"
+      - name: Prepare N3 synthetic million lines
+        if: matrix.level == 'n3'
+        run: python3 tools/corpus.py n3 "$RUNNER_TEMP/corpus"
+      - name: Measure N1
+        if: matrix.level == 'n1'
+        run: python3 tools/measure.py --binary "$RUNNER_TEMP/scip-plsql" --corpus "$RUNNER_TEMP/corpus" --output "$RUNNER_TEMP/results" --label N1 --revision "manifest-sha256:$(sha256sum corpus/manifest.json | cut -d' ' -f1)"
+      - name: Measure N3 including one-file change
+        if: matrix.level == 'n3'
+        run: python3 tools/measure.py --binary "$RUNNER_TEMP/scip-plsql" --corpus "$RUNNER_TEMP/corpus" --output "$RUNNER_TEMP/results" --label N3 --revision '200000 units, 1000 units/file, generator v1' --change workload_00000.sql
+      - name: Upload results even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: corpus-${{ matrix.level }}
+          path: ${{ runner.temp }}/results
+          if-no-files-found: warn

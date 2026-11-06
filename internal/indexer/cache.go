@@ -20,13 +20,14 @@ import (
 
 // Entries are disposable. The executable fingerprint also protects against
 // stale data after changes to resolution logic or parser dependencies.
-const cacheVersion = "scip-plsql-doc-v4"
-const cacheMagic = "PSCDOC01"
+const cacheVersion = "scip-plsql-doc-v5"
+const cacheMagic = "PSCDOC02"
 
 type CacheStats struct{ Hits, Misses, Invalid, Writes int }
 type documentCache struct {
 	dir        string
 	executable [32]byte
+	external   map[string]*scip.SymbolInformation
 	stats      *CacheStats
 	warned     bool
 }
@@ -83,7 +84,7 @@ func executableFingerprint() ([32]byte, error) {
 	copy(result[:], h.Sum(nil))
 	return result, nil
 }
-func (s *state) catalogFingerprintForSource(src *source, executable [32]byte) [32]byte {
+func (s *state) catalogFingerprintForSource(src *source, executable [32]byte, external map[string]*scip.SymbolInformation) [32]byte {
 	h := sha256.New()
 	hashPart(h, []byte(cacheVersion))
 	hashPart(h, executable[:])
@@ -148,13 +149,13 @@ func (s *state) catalogFingerprintForSource(src *source, executable [32]byte) [3
 	hashJSON(h, standalone)
 	// External symbol sets are usually small and can change without a local
 	// declaration, so retain their complete deterministic fingerprint.
-	keys := make([]string, 0, len(s.external))
-	for key := range s.external {
+	keys := make([]string, 0, len(external))
+	for key := range external {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
 	for _, key := range keys {
-		b, err := proto.MarshalOptions{Deterministic: true}.Marshal(s.external[key])
+		b, err := proto.MarshalOptions{Deterministic: true}.Marshal(external[key])
 		if err != nil {
 			panic(err)
 		}
@@ -162,6 +163,8 @@ func (s *state) catalogFingerprintForSource(src *source, executable [32]byte) [3
 	}
 	hashJSON(h, s.opts.CCFlags)
 	hashPart(h, []byte(s.opts.Schema))
+	hashPart(h, []byte(s.opts.Database))
+	hashPart(h, []byte(s.opts.Version))
 	hashPart(h, []byte(s.opts.SchemaPath))
 	hashJSON(h, s.opts.MaxTokens)
 	var result [32]byte
@@ -254,7 +257,7 @@ func selectedBindings[T any](all map[string]map[string]T, names map[string]bool)
 func (c *documentCache) key(src *source, s *state) ([32]byte, error) {
 	h := sha256.New()
 	hashPart(h, []byte(cacheVersion))
-	catalog := s.catalogFingerprintForSource(src, c.executable)
+	catalog := s.catalogFingerprintForSource(src, c.executable, c.external)
 	hashPart(h, catalog[:])
 	hashPart(h, []byte(src.path))
 	hashPart(h, []byte(src.text))
@@ -276,7 +279,7 @@ func (c *documentCache) filename(key [32]byte) string {
 	encoded := hex.EncodeToString(key[:])
 	return filepath.Join(c.dir, encoded[:2], encoded+".pb")
 }
-func (c *documentCache) get(key [32]byte, path string) (*scip.Document, []byte) {
+func (c *documentCache) get(key [32]byte, path string) (*scip.Index, []byte) {
 	data, err := os.ReadFile(c.filename(key))
 	if err != nil {
 		c.stats.Misses++
@@ -294,14 +297,27 @@ func (c *documentCache) get(key [32]byte, path string) (*scip.Document, []byte) 
 		return nil, nil
 	}
 	payload := data[len(cacheMagic)+sha256.Size:]
-	var doc scip.Document
-	if proto.Unmarshal(payload, &doc) != nil || doc.RelativePath != path || doc.Language != "PLSQL" || doc.PositionEncoding != scip.PositionEncoding_UTF8CodeUnitOffsetFromLineStart {
+	var entry scip.Index
+	if proto.Unmarshal(payload, &entry) != nil || len(entry.Documents) != 1 || entry.Documents[0].RelativePath != path || entry.Documents[0].Language != "PLSQL" || entry.Documents[0].PositionEncoding != scip.PositionEncoding_UTF8CodeUnitOffsetFromLineStart {
+		c.stats.Invalid++
+		c.stats.Misses++
+		return nil, nil
+	}
+	for _, symbol := range entry.ExternalSymbols {
+		if symbol == nil || symbol.Symbol == "" {
+			c.stats.Invalid++
+			c.stats.Misses++
+			return nil, nil
+		}
+	}
+	doc, err := proto.MarshalOptions{Deterministic: true}.Marshal(entry.Documents[0])
+	if err != nil {
 		c.stats.Invalid++
 		c.stats.Misses++
 		return nil, nil
 	}
 	c.stats.Hits++
-	return &doc, payload
+	return &entry, doc
 }
 func (c *documentCache) put(key [32]byte, payload []byte) {
 	file := c.filename(key)

@@ -3,6 +3,8 @@
   --                     ^^^^^^^ definition scip-plsql oracle demo 1 HR/PAYROLL#
     PROCEDURE raise_all(p_value NUMBER) IS
 --            ^^^^^^^^^ definition scip-plsql oracle demo 1 HR/PAYROLL#RAISE_ALL().
+--            documentation
+--            > ^^^^^^^ definition scip-plsql oracle demo 1 HR/PAYROLL#
 --                      ^^^^^^^ definition scip-plsql oracle demo 1 HR/PAYROLL#RAISE_ALL().(P_VALUE)
   --          ^^^^^^^^^ definition scip-plsql oracle demo 1 HR/PAYROLL#RAISE_ALL().
   --                    ^^^^^^^ definition scip-plsql oracle demo 1 HR/PAYROLL#RAISE_ALL().(P_VALUE)

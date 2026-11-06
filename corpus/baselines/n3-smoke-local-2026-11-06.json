@@ -1,0 +1,79 @@
+{
+  "label": "N3-smoke",
+  "revision": "1000 units, 100 units/file, generator v1",
+  "utc": "2026-11-06T10:16:43.242045+00:00",
+  "binary_sha256": "04e155159090f23abd9c9f5be677269461edd41762e3f2467df180016ebf4eab",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cpu_count": 28,
+  "jobs": 4,
+  "timeout_seconds": 120,
+  "runs": {
+    "cold": {
+      "exit_code": 0,
+      "wall_seconds": 0.07707028900040314,
+      "metrics": {
+        "Hits": "0",
+        "Misses": "10",
+        "Invalid": "0",
+        "Writes": "10",
+        "Files": "10",
+        "Lines of code": "5010",
+        "Compilation units": "1000",
+        "Parsed units": "1000",
+        "Degraded units": "0",
+        "Resolved references": "0",
+        "Parse time": "8ms",
+        "Total time": "72ms",
+        "Throughput": "69391 LOC/s",
+        "Peak sampled heap": "4.5 MiB"
+      },
+      "index_sha256": "2187f5eea78aa8e2c9d40d939736f7c86b16f4d8d63b3ef35f19097cf3a94df5",
+      "index_bytes": 143157
+    },
+    "warm": {
+      "exit_code": 0,
+      "wall_seconds": 0.06178256100247381,
+      "metrics": {
+        "Hits": "10",
+        "Misses": "0",
+        "Invalid": "0",
+        "Writes": "0",
+        "Files": "10",
+        "Lines of code": "5010",
+        "Compilation units": "1000",
+        "Parsed units": "1000",
+        "Degraded units": "0",
+        "Resolved references": "0",
+        "Parse time": "4ms",
+        "Total time": "57ms",
+        "Throughput": "88272 LOC/s",
+        "Peak sampled heap": "4.1 MiB"
+      },
+      "index_sha256": "2187f5eea78aa8e2c9d40d939736f7c86b16f4d8d63b3ef35f19097cf3a94df5",
+      "index_bytes": 143157
+    },
+    "changed": {
+      "exit_code": 0,
+      "wall_seconds": 0.06304684199858457,
+      "metrics": {
+        "Hits": "9",
+        "Misses": "1",
+        "Invalid": "0",
+        "Writes": "1",
+        "Files": "10",
+        "Lines of code": "5011",
+        "Compilation units": "1000",
+        "Parsed units": "1000",
+        "Degraded units": "0",
+        "Resolved references": "0",
+        "Parse time": "5ms",
+        "Total time": "58ms",
+        "Throughput": "86138 LOC/s",
+        "Peak sampled heap": "3.5 MiB"
+      },
+      "index_sha256": "7e95a8b4642e5cb725e6b478c582cd759f9002d67d650ab39c1d59d40a530283",
+      "index_bytes": 143157
+    }
+  },
+  "cold_warm_identical": true
+}

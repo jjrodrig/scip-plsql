@@ -78,6 +78,7 @@ type state struct {
 	standalone                     map[string]*method
 	methodNodes                    map[ast.Node]*method
 	external                       map[string]*scip.SymbolInformation
+	externalUsed                   map[string]*scip.SymbolInformation
 	packageBindings                map[string]map[string]string
 	packageRowTypes                map[string]map[string]string
 	typeBindings                   map[string]map[string]string
@@ -307,7 +308,11 @@ func Index(o Options) error {
 		if stats == nil {
 			stats = &CacheStats{}
 		}
-		cache := &documentCache{dir: cacheDir, stats: stats}
+		external := make(map[string]*scip.SymbolInformation, len(s.external))
+		for symbol, info := range s.external {
+			external[symbol] = info
+		}
+		cache := &documentCache{dir: cacheDir, stats: stats, external: external}
 		executable, err := executableFingerprint()
 		if err != nil {
 			cache.warn(err)
@@ -386,12 +391,12 @@ func (s *state) externalSymbol(symbol, display string, kind scip.SymbolInformati
 	if symbol == "" {
 		return
 	}
+	info := &scip.SymbolInformation{Symbol: symbol, DisplayName: display, Kind: kind, EnclosingSymbol: parent}
 	if s.external[symbol] == nil {
-		info := &scip.SymbolInformation{Symbol: symbol, DisplayName: display, Kind: kind}
-		if parent != "" {
-			info.EnclosingSymbol = parent
-		}
 		s.external[symbol] = info
+	}
+	if s.externalUsed != nil && s.externalUsed[symbol] == nil {
+		s.externalUsed[symbol] = info
 	}
 }
 
@@ -985,9 +990,21 @@ func (s *state) write(w io.Writer) error {
 			if err != nil {
 				return err
 			}
-			cachedDoc, cached = s.cache.get(key, src.path)
+			entry, data := s.cache.get(key, src.path)
+			cached = data
+			if entry != nil {
+				cachedDoc = entry.Documents[0]
+				for _, info := range entry.ExternalSymbols {
+					if s.external[info.Symbol] == nil {
+						s.external[info.Symbol] = info
+					}
+				}
+			}
 		}
 		if cached == nil {
+			if s.cache != nil {
+				s.externalUsed = make(map[string]*scip.SymbolInformation)
+			}
 			s.attachSynonymRelationships(src)
 			s.attachTypeRelationships(src)
 			s.resolveLocals(src)
@@ -999,7 +1016,21 @@ func (s *state) write(w io.Writer) error {
 				return err
 			}
 			if s.cache != nil {
-				s.cache.put(key, cached)
+				keys := make([]string, 0, len(s.externalUsed))
+				for symbol := range s.externalUsed {
+					keys = append(keys, symbol)
+				}
+				sort.Strings(keys)
+				entry := &scip.Index{Documents: []*scip.Document{src.doc}}
+				for _, symbol := range keys {
+					entry.ExternalSymbols = append(entry.ExternalSymbols, s.externalUsed[symbol])
+				}
+				payload, err := proto.MarshalOptions{Deterministic: true}.Marshal(entry)
+				if err != nil {
+					return err
+				}
+				s.cache.put(key, payload)
+				s.externalUsed = nil
 			}
 			cachedDoc = src.doc
 		}

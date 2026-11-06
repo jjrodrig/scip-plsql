@@ -1,0 +1,58 @@
+{
+  "label": "N1-expanded",
+  "revision": "manifest-sha256:b1eebd3fdc6cb72385bfc8f5e87cad1bf8eaf03bc89fbab0a6123562a5714b18",
+  "utc": "2026-11-06T10:25:11.472523+00:00",
+  "binary_sha256": "29b6954dddb854d5a51fb2944ce9edc46da47c1ad431ae6dc01e37205365f5cd",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cpu_count": 28,
+  "jobs": 4,
+  "timeout_seconds": 300,
+  "change_file": null,
+  "runs": {
+    "cold": {
+      "exit_code": 0,
+      "wall_seconds": 24.1005683709991,
+      "metrics": {
+        "Hits": "0",
+        "Misses": "2159",
+        "Invalid": "0",
+        "Writes": "2159",
+        "Files": "2159",
+        "Lines of code": "519930",
+        "Compilation units": "138451",
+        "Parsed units": "128001",
+        "Degraded units": "10450",
+        "Resolved references": "239174",
+        "Parse time": "672ms",
+        "Total time": "24.09s",
+        "Throughput": "21583 LOC/s",
+        "Peak sampled heap": "406.6 MiB"
+      },
+      "index_sha256": "5f41800a84d044865a0262db8712c379cfa35fc8de04dd5ac9eb4627f3cf620d",
+      "index_bytes": 31609917
+    },
+    "warm": {
+      "exit_code": 0,
+      "wall_seconds": 23.305425491998903,
+      "metrics": {
+        "Hits": "2159",
+        "Misses": "0",
+        "Invalid": "0",
+        "Writes": "0",
+        "Files": "2159",
+        "Lines of code": "519930",
+        "Compilation units": "138451",
+        "Parsed units": "128001",
+        "Degraded units": "10450",
+        "Resolved references": "239174",
+        "Parse time": "678ms",
+        "Total time": "23.295s",
+        "Throughput": "22319 LOC/s",
+        "Peak sampled heap": "382.6 MiB"
+      },
+      "index_sha256": "5f41800a84d044865a0262db8712c379cfa35fc8de04dd5ac9eb4627f3cf620d",
+      "index_bytes": 31609917
+    }
+  },
+  "cold_warm_identical": true
+}
