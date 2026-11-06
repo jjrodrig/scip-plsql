@@ -11,7 +11,9 @@ import (
 
 // constantSQL accepts only literal concatenations. Anything involving a
 // variable, function call, or non-concatenation operator remains opaque.
-func constantSQL(src *source, expr ast.Node) (string, []int, bool) {
+type literalOffsets struct{ starts, ends []int }
+
+func constantSQL(src *source, expr ast.Node) (string, literalOffsets, bool) {
 	switch n := expr.(type) {
 	case *ast.StringLiteral:
 		return stringLiteralSQL(src.text, n)
@@ -19,15 +21,15 @@ func constantSQL(src *source, expr ast.Node) (string, []int, bool) {
 		return constantSQL(src, n.Expr)
 	case *ast.BinaryExpr:
 		if n.Op != "||" {
-			return "", nil, false
+			return "", literalOffsets{}, false
 		}
 		left, lm, ok := constantSQL(src, n.Left)
 		if !ok {
-			return "", nil, false
+			return "", literalOffsets{}, false
 		}
 		right, rm, ok := constantSQL(src, n.Right)
 		if !ok {
-			return "", nil, false
+			return "", literalOffsets{}, false
 		}
 		if len(left) == 0 {
 			return right, rm, true
@@ -35,16 +37,16 @@ func constantSQL(src *source, expr ast.Node) (string, []int, bool) {
 		if len(right) == 0 {
 			return left, lm, true
 		}
-		lm[len(lm)-1] = rm[0]
-		return left + right, append(lm, rm[1:]...), true
+		lm.starts[len(lm.starts)-1] = rm.starts[0]
+		return left + right, literalOffsets{append(lm.starts, rm.starts[1:]...), append(lm.ends, rm.ends[1:]...)}, true
 	default:
-		return "", nil, false
+		return "", literalOffsets{}, false
 	}
 }
 
-func stringLiteralSQL(text string, lit *ast.StringLiteral) (string, []int, bool) {
+func stringLiteralSQL(text string, lit *ast.StringLiteral) (string, literalOffsets, bool) {
 	if lit == nil || lit.Loc.Start < 0 || lit.Loc.End > len(text) || lit.Loc.End <= lit.Loc.Start {
-		return "", nil, false
+		return "", literalOffsets{}, false
 	}
 	raw := text[lit.Loc.Start:lit.Loc.End]
 	open := 0
@@ -67,22 +69,22 @@ func stringLiteralSQL(text string, lit *ast.StringLiteral) (string, []int, bool)
 	} else {
 		quote := strings.IndexByte(raw, '\'')
 		if quote < 0 {
-			return "", nil, false
+			return "", literalOffsets{}, false
 		}
 		open = quote + 1
 	}
 	if open > len(raw) {
-		return "", nil, false
+		return "", literalOffsets{}, false
 	}
 	contentEnd := len(raw)
 	if qQuote {
 		if contentEnd < open+2 || raw[contentEnd-2] != close || raw[contentEnd-1] != '\'' {
-			return "", nil, false
+			return "", literalOffsets{}, false
 		}
 		contentEnd -= 2
 	} else {
 		if contentEnd <= open || raw[contentEnd-1] != '\'' {
-			return "", nil, false
+			return "", literalOffsets{}, false
 		}
 		contentEnd--
 	}
@@ -99,7 +101,7 @@ func stringLiteralSQL(text string, lit *ast.StringLiteral) (string, []int, bool)
 		}
 		_, size := utf8DecodeRuneInString(raw[i:contentEnd])
 		if size < 1 {
-			return "", nil, false
+			return "", literalOffsets{}, false
 		}
 		value.WriteString(raw[i : i+size])
 		for j := 1; j <= size; j++ {
@@ -108,9 +110,32 @@ func stringLiteralSQL(text string, lit *ast.StringLiteral) (string, []int, bool)
 		i += size
 	}
 	if value.String() != lit.Val || len(positions) != len(lit.Val)+1 {
-		return "", nil, false
+		return "", literalOffsets{}, false
 	}
-	return lit.Val, positions, true
+	// SQL*Plus joins continued lines before executing the literal. Retain
+	// separate start/end boundaries around removed bytes so SCIP ranges on
+	// either side, including identifiers spanning the join, remain accurate.
+	decoded := value.String()
+	var joined strings.Builder
+	offsets := literalOffsets{starts: []int{positions[0]}, ends: []int{positions[0]}}
+	for i := 0; i < len(decoded); {
+		if decoded[i] == '-' {
+			j := i + 1
+			for j < len(decoded) && (decoded[j] == ' ' || decoded[j] == '\t' || decoded[j] == '\r') {
+				j++
+			}
+			if j < len(decoded) && decoded[j] == '\n' {
+				i = j + 1
+				continue
+			}
+		}
+		offsets.starts[len(offsets.starts)-1] = positions[i]
+		joined.WriteByte(decoded[i])
+		offsets.starts = append(offsets.starts, positions[i+1])
+		offsets.ends = append(offsets.ends, positions[i+1])
+		i++
+	}
+	return joined.String(), offsets, true
 }
 
 // utf8DecodeRuneInString avoids converting source bytes or changing offsets.
@@ -120,7 +145,7 @@ func utf8DecodeRuneInString(s string) (rune, int) {
 
 func (s *state) resolveDynamicSQL(src *source, expr ast.Node, schema, currentPackage string, start, end int, emit addReference, emitAmbiguous func(int, int, []string)) {
 	query, positions, ok := constantSQL(src, expr)
-	if !ok || strings.TrimSpace(query) == "" || len(positions) != len(query)+1 {
+	if !ok || strings.TrimSpace(query) == "" || len(positions.starts) != len(query)+1 || len(positions.ends) != len(query)+1 {
 		src.addDiagnostic(start, end, &scip.Diagnostic{Severity: scip.Severity_Warning, Code: "dynamic-sql-opaque", Source: "scip-plsql", Message: "No se pudo indexar el SQL dinámico porque no es una concatenación constante de literales"})
 		return
 	}
@@ -129,27 +154,27 @@ func (s *state) resolveDynamicSQL(src *source, expr ast.Node, schema, currentPac
 		src.addDiagnostic(start, end, &scip.Diagnostic{Severity: scip.Severity_Warning, Code: "dynamic-sql-parse", Source: "scip-plsql", Message: err.Error()})
 		return
 	}
-	dynamic := &source{path: src.path, text: query, doc: src.doc, lineStarts: src.lineStarts, offsetMap: positions, nextLocal: src.nextLocal, sqlBindings: src.sqlBindings}
+	dynamic := &source{path: src.path, text: query, doc: src.doc, lineStarts: src.lineStarts, offsetMap: positions.starts, nextLocal: src.nextLocal, sqlBindings: src.sqlBindings}
 	for _, item := range parsed.Items {
 		if raw, ok := item.(*ast.RawStmt); ok && raw.Stmt != nil {
 			dynamic.units = append(dynamic.units, unit{node: raw.Stmt, schema: schema})
 		}
 	}
 	s.resolveLocals(dynamic)
-	mapOffset := func(offset int) int {
+	mapOffset := func(offset int, offsets []int) int {
 		if offset < 0 {
 			offset = 0
 		}
-		if offset >= len(positions) {
-			offset = len(positions) - 1
+		if offset >= len(offsets) {
+			offset = len(offsets) - 1
 		}
-		return positions[offset]
+		return offsets[offset]
 	}
 	mappedEmit := func(a, b int, symbol string, role scip.SymbolRole) {
-		emit(mapOffset(a), mapOffset(b), symbol, role)
+		emit(mapOffset(a, positions.starts), mapOffset(b, positions.ends), symbol, role)
 	}
 	mappedAmbiguous := func(a, b int, symbols []string) {
-		emitAmbiguous(mapOffset(a), mapOffset(b), symbols)
+		emitAmbiguous(mapOffset(a, positions.starts), mapOffset(b, positions.ends), symbols)
 	}
 	for _, item := range parsed.Items {
 		raw, ok := item.(*ast.RawStmt)

@@ -20,7 +20,7 @@ import (
 
 // Entries are disposable. The executable fingerprint also protects against
 // stale data after changes to resolution logic or parser dependencies.
-const cacheVersion = "scip-plsql-doc-v5"
+const cacheVersion = "scip-plsql-doc-v6"
 const cacheMagic = "PSCDOC02"
 
 type CacheStats struct{ Hits, Misses, Invalid, Writes int }
@@ -28,6 +28,7 @@ type documentCache struct {
 	dir        string
 	executable [32]byte
 	external   map[string]*scip.SymbolInformation
+	catalog    map[string][32]byte
 	stats      *CacheStats
 	warned     bool
 }
@@ -89,67 +90,20 @@ func (s *state) catalogFingerprintForSource(src *source, executable [32]byte, ex
 	hashPart(h, []byte(cacheVersion))
 	hashPart(h, executable[:])
 	names := sourceIdentifiers(src)
-	objects := map[string]string{}
-	for key, value := range s.objects {
-		if keyUsesIdentifier(key, names) {
-			objects[key] = value
+	keys := make([]string, 0, len(names))
+	for key := range names {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		if digest, ok := s.cache.catalog[key]; ok {
+			hashPart(h, []byte(key))
+			hashPart(h, digest[:])
 		}
 	}
-	hashJSON(h, objects)
-	kinds := map[string]scip.SymbolInformation_Kind{}
-	for key, value := range s.objectKinds {
-		if keyUsesIdentifier(key, names) {
-			kinds[key] = value
-		}
-	}
-	hashJSON(h, kinds)
-	packageBindings := selectedBindings(s.packageBindings, names)
-	hashJSON(h, packageBindings)
-	hashJSON(h, selectedBindings(s.packageRowTypes, names))
-	hashJSON(h, selectedBindings(s.typeBindings, names))
-	parents := map[string]string{}
-	for key, value := range s.typeParents {
-		if keyUsesIdentifier(key, names) || keyUsesIdentifier(value, names) {
-			parents[key] = value
-		}
-	}
-	hashJSON(h, parents)
-	synonyms := map[string]cachedSynonym{}
-	for k, v := range s.synonyms {
-		if keyUsesIdentifier(k, names) || keyUsesIdentifier(v.target, names) {
-			synonyms[k] = cachedSynonym{v.target, v.remote}
-		}
-	}
-	hashJSON(h, synonyms)
-	methods := map[string][]cachedMethod{}
-	for k, all := range s.methods {
-		if !keyUsesIdentifier(k, names) {
-			continue
-		}
-		for _, m := range all {
-			c := cachedMethod{Symbol: m.symbol, Identity: m.identity, ReturnType: m.returnType, Public: m.public}
-			for _, p := range m.params {
-				c.Params = append(c.Params, cachedFormal{p.name, p.typ, p.mode, p.optional})
-			}
-			methods[k] = append(methods[k], c)
-		}
-	}
-	hashJSON(h, methods)
-	standalone := map[string]cachedMethod{}
-	for k, m := range s.standalone {
-		if !keyUsesIdentifier(k, names) {
-			continue
-		}
-		c := cachedMethod{Symbol: m.symbol, Identity: m.identity, ReturnType: m.returnType, Public: m.public}
-		for _, p := range m.params {
-			c.Params = append(c.Params, cachedFormal{p.name, p.typ, p.mode, p.optional})
-		}
-		standalone[k] = c
-	}
-	hashJSON(h, standalone)
 	// External symbol sets are usually small and can change without a local
 	// declaration, so retain their complete deterministic fingerprint.
-	keys := make([]string, 0, len(external))
+	keys = make([]string, 0, len(external))
 	for key := range external {
 		keys = append(keys, key)
 	}
@@ -212,6 +166,13 @@ func sourceIdentifiers(src *source) map[string]bool {
 			continue
 		}
 		ast.Inspect(u.node, func(node ast.Node) bool {
+			if dynamic, ok := node.(*ast.PLSQLExecImmediate); ok {
+				if query, _, valid := constantSQL(src, dynamic.SQL); valid {
+					// Identifiers can span SQL*Plus continuations or joined
+					// string literals, so inspect the reconstructed query too.
+					addWords(query)
+				}
+			}
 			if lit, ok := node.(*ast.StringLiteral); ok {
 				addWords(lit.Val)
 			}

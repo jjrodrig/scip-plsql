@@ -1,0 +1,80 @@
+{
+  "label": "N3-optimized",
+  "revision": "200000 units, 1000 units/file, generator v1",
+  "utc": "2026-11-06T12:34:11.397350+00:00",
+  "binary_sha256": "9660c7821b9b71835f13ff6e275bf4044b508ef15f8c1d29986ac14c17389738",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cpu_count": 28,
+  "jobs": 4,
+  "timeout_seconds": 150,
+  "change_file": "workload_00000.sql",
+  "runs": {
+    "cold": {
+      "exit_code": 0,
+      "wall_seconds": 5.467156489001354,
+      "metrics": {
+        "Hits": "0",
+        "Misses": "200",
+        "Invalid": "0",
+        "Writes": "200",
+        "Files": "200",
+        "Lines of code": "1000200",
+        "Compilation units": "200000",
+        "Parsed units": "200000",
+        "Degraded units": "0",
+        "Resolved references": "0",
+        "Parse time": "505ms",
+        "Total time": "5.428s",
+        "Throughput": "184264 LOC/s",
+        "Peak sampled heap": "780.2 MiB"
+      },
+      "index_sha256": "c5e4a1ccd5e3ad9a3136e520f72b6d5fa0e27abc42ec919aa5b07ac04bb175dc",
+      "index_bytes": 30746815
+    },
+    "warm": {
+      "exit_code": 0,
+      "wall_seconds": 4.8630959459987935,
+      "metrics": {
+        "Hits": "200",
+        "Misses": "0",
+        "Invalid": "0",
+        "Writes": "0",
+        "Files": "200",
+        "Lines of code": "1000200",
+        "Compilation units": "200000",
+        "Parsed units": "200000",
+        "Degraded units": "0",
+        "Resolved references": "0",
+        "Parse time": "514ms",
+        "Total time": "4.826s",
+        "Throughput": "207237 LOC/s",
+        "Peak sampled heap": "652.4 MiB"
+      },
+      "index_sha256": "c5e4a1ccd5e3ad9a3136e520f72b6d5fa0e27abc42ec919aa5b07ac04bb175dc",
+      "index_bytes": 30746815
+    },
+    "changed": {
+      "exit_code": 0,
+      "wall_seconds": 4.8161931130016455,
+      "metrics": {
+        "Hits": "199",
+        "Misses": "1",
+        "Invalid": "0",
+        "Writes": "1",
+        "Files": "200",
+        "Lines of code": "1000201",
+        "Compilation units": "200000",
+        "Parsed units": "200000",
+        "Degraded units": "0",
+        "Resolved references": "0",
+        "Parse time": "528ms",
+        "Total time": "4.776s",
+        "Throughput": "209422 LOC/s",
+        "Peak sampled heap": "728.4 MiB"
+      },
+      "index_sha256": "21d2ac1f248625268b7e5c6555911bb73243cfd177af2dbcc6752e9d72c3f650",
+      "index_bytes": 30746815
+    }
+  },
+  "cold_warm_identical": true
+}

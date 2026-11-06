@@ -107,6 +107,77 @@ func TestIndexSQLPlusContinuedInsert(t *testing.T) {
 		t.Fatalf("expected one write to products.id, got %d", references)
 	}
 }
+
+func TestContinuedStringInsideSQLPlusInsert(t *testing.T) {
+	input := "rem Oracle's language\nINSERT INTO products VALUES (1726-\n, 'US'-\n, UNISTR(-\n'LCD Monitor'-\n), UNISTR(-\n'Liquid display,-\nhigh resolution.'-\n));\n"
+	out, _ := preprocess(input, nil)
+	start := strings.Index(out, "INSERT")
+	list, err := parseRange(out, start, len(out))
+	if err != nil || list == nil {
+		t.Fatalf("continued literal must parse: %v\n%s", err, out)
+	}
+}
+
+func TestContinuedDynamicSQLPreservesReferenceRanges(t *testing.T) {
+	root := t.TempDir()
+	sql := "CREATE TABLE emp (id NUMBER);\nBEGIN\n  EXECUTE IMMEDIATE 'SELECT id-\n FROM em-\np';\nEND;\n/\n"
+	if err := os.WriteFile(filepath.Join(root, "a.sql"), []byte(sql), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := Index(Options{Root: root, Output: "index.scip", Database: "demo", Version: "1", Schema: "HR"}); err != nil {
+		t.Fatal(err)
+	}
+	b, err := os.ReadFile(filepath.Join(root, "index.scip"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var idx scip.Index
+	if err := proto.Unmarshal(b, &idx); err != nil {
+		t.Fatal(err)
+	}
+	var table, col bool
+	for _, o := range idx.Documents[0].Occurrences {
+		if o.Symbol == "scip-plsql oracle demo 1 HR/EMP#" && len(o.Range) == 4 && o.Range[0] == 3 && o.Range[2] == 4 {
+			table = true
+		}
+		if o.Symbol == "scip-plsql oracle demo 1 HR/EMP#ID." && len(o.Range) == 3 && o.Range[0] == 2 && o.Range[2]-o.Range[1] == 2 {
+			col = true
+		}
+		for _, d := range o.Diagnostics {
+			if strings.HasPrefix(d.Code, "dynamic-sql-") {
+				t.Errorf("unexpected diagnostic: %v", d)
+			}
+		}
+	}
+	if !table || !col {
+		t.Fatalf("table=%v column=%v", table, col)
+	}
+}
+
+func TestContinuedAlternativeQuotedDynamicSQL(t *testing.T) {
+	root := t.TempDir()
+	sql := "CREATE TABLE emp (id NUMBER);\nBEGIN\n  EXECUTE IMMEDIATE q'[SELECT id FROM em-\np]';\nEND;\n/\n"
+	if err := os.WriteFile(filepath.Join(root, "a.sql"), []byte(sql), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := Index(Options{Root: root, Output: "index.scip", Database: "demo", Version: "1", Schema: "HR"}); err != nil {
+		t.Fatal(err)
+	}
+	b, err := os.ReadFile(filepath.Join(root, "index.scip"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var idx scip.Index
+	if err := proto.Unmarshal(b, &idx); err != nil {
+		t.Fatal(err)
+	}
+	for _, o := range idx.Documents[0].Occurrences {
+		if o.Symbol == "scip-plsql oracle demo 1 HR/EMP#" && len(o.Range) == 4 && o.Range[0] == 2 && o.Range[2] == 3 {
+			return
+		}
+	}
+	t.Fatal("missing reference across continued q-quoted literal")
+}
 func TestPreprocessUnknownFlagDoesNotChooseElse(t *testing.T) {
 	in := "$IF $$missing $THEN\nCREATE TABLE a (x NUMBER);\n$ELSE\nCREATE TABLE b (x NUMBER);\n$END\n"
 	got, diags := preprocess(in, nil)

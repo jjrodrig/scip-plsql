@@ -383,6 +383,17 @@ func (v *localResolver) Visit(node ast.Node) ast.Visitor {
 			ast.Walk(v, n.Value)
 		}
 		return nil
+	case *ast.PLSQLRaise:
+		if n.Exception != "" {
+			_, _, end := tokenAt(v.src.text, n.Loc.Start)
+			raw, a, b := tokenAt(v.src.text, end)
+			if name(raw) == name(n.Exception) {
+				if symbol := v.scope.lookup(name(raw)); symbol != "" {
+					v.reference(a, b, symbol, scip.SymbolRole_ReadAccess)
+				}
+			}
+		}
+		return nil
 	case *ast.PLSQLExecImmediate:
 		if n.SQL != nil {
 			source := *v

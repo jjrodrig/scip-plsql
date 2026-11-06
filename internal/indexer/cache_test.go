@@ -4,11 +4,73 @@ import (
 	"bytes"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/sourcegraph/scip/bindings/go/scip"
 	"google.golang.org/protobuf/proto"
 )
+
+func TestCatalogIndexTracksEveryMatchingIdentifier(t *testing.T) {
+	for _, key := range []string{"HR.PKG.MEMBER", `HR."Mixed.Name".FIELD`, `"Sales".ORDERS.ID`} {
+		s := &state{objects: map[string]string{key: "one"}}
+		before := s.buildCacheCatalog()
+		s.objects[key] = "two"
+		after := s.buildCacheCatalog()
+		parts := strings.Split(key, ".")
+		for i := range parts {
+			for j := i + 1; j <= len(parts); j++ {
+				part := strings.Join(parts[i:j], ".")
+				for _, candidate := range []string{part, name(part), strings.ToUpper(part)} {
+					if keyUsesIdentifier(key, map[string]bool{candidate: true}) && before[candidate] == after[candidate] {
+						t.Errorf("catalog change in %q ignored for %q", key, candidate)
+					}
+				}
+			}
+		}
+	}
+}
+
+func TestCacheInvalidatesForNamesJoinedInDynamicSQL(t *testing.T) {
+	for _, expression := range []string{"'SELECT id FROM em-\np'", "'SELECT id FROM em' || 'p'"} {
+		t.Run(expression, func(t *testing.T) {
+			root := t.TempDir()
+			sql := "CREATE PROCEDURE hr.p IS BEGIN EXECUTE IMMEDIATE " + expression + "; END;\n/\n"
+			if err := os.WriteFile(filepath.Join(root, "a.sql"), []byte(sql), 0600); err != nil {
+				t.Fatal(err)
+			}
+			var stats CacheStats
+			opts := Options{Root: root, Output: filepath.Join(t.TempDir(), "index.scip"), Database: "demo", Version: "1", Schema: "HR", CacheDir: filepath.Join(t.TempDir(), "cache"), CacheStats: &stats}
+			if err := Index(opts); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(root, "b.sql"), []byte("CREATE TABLE hr.emp (id NUMBER);\n"), 0600); err != nil {
+				t.Fatal(err)
+			}
+			if err := Index(opts); err != nil {
+				t.Fatal(err)
+			}
+			if stats.Hits != 0 || stats.Misses != 2 {
+				t.Fatalf("new object must invalidate dynamic SQL: %+v", stats)
+			}
+			cached, err := os.ReadFile(opts.Output)
+			if err != nil {
+				t.Fatal(err)
+			}
+			opts.CacheDir = ""
+			if err := Index(opts); err != nil {
+				t.Fatal(err)
+			}
+			fresh, err := os.ReadFile(opts.Output)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !bytes.Equal(cached, fresh) {
+				t.Fatal("cached output differs after new dynamic SQL target")
+			}
+		})
+	}
+}
 
 func TestCachePreservesRemoteSymbolsAcrossDocuments(t *testing.T) {
 	root := t.TempDir()

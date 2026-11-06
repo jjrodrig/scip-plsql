@@ -53,6 +53,7 @@ type source struct {
 	lineStarts              []int
 	offsetMap               []int
 	preprocessorDiagnostics []preprocessDiagnostic
+	miningDiagnostics       []preprocessDiagnostic
 	schemaDiagnostics       []preprocessDiagnostic
 	encodingDiagnostics     []preprocessDiagnostic
 	shadowedCalls           map[*ast.FuncCallExpr]bool
@@ -196,6 +197,7 @@ func Index(o Options) error {
 			}
 		}
 		processed, diagnostics := preprocess(src.text, o.CCFlags)
+		processed, src.miningDiagnostics = preprocessMining(processed)
 		if decoded.utf8BOM {
 			processed = "   " + processed[3:]
 		}
@@ -313,6 +315,7 @@ func Index(o Options) error {
 			external[symbol] = info
 		}
 		cache := &documentCache{dir: cacheDir, stats: stats, external: external}
+		cache.catalog = s.buildCacheCatalog()
 		executable, err := executableFingerprint()
 		if err != nil {
 			cache.warn(err)
@@ -413,6 +416,9 @@ func (s *state) declarations(src *source) {
 	}
 	for _, d := range src.preprocessorDiagnostics {
 		src.doc.Occurrences = append(src.doc.Occurrences, &scip.Occurrence{Range: src.rng(d.start, d.end), Diagnostics: []*scip.Diagnostic{{Severity: scip.Severity_Warning, Code: "conditional-compilation", Source: "scip-plsql", Message: d.message}}})
+	}
+	for _, d := range src.miningDiagnostics {
+		src.addDiagnostic(d.start, d.end, &scip.Diagnostic{Severity: scip.Severity_Warning, Code: "mining-model-unresolved", Source: "scip-plsql", Message: d.message})
 	}
 	for _, d := range src.encodingDiagnostics {
 		src.doc.Occurrences = append(src.doc.Occurrences, &scip.Occurrence{Range: src.rng(d.start, d.end), Diagnostics: []*scip.Diagnostic{{Severity: scip.Severity_Warning, Code: "encoding-replacement", Source: "scip-plsql", Message: d.message}}})

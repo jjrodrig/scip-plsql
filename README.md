@@ -1,6 +1,6 @@
 # scip-plsql
 
-`scip-plsql` indexes Oracle PL/SQL source files and writes a [SCIP](https://github.com/sourcegraph/scip) index for code navigation and analysis. It is an early-stage project: supported syntax is useful for real repositories, but coverage and performance targets from the design are not yet complete or measured.
+`scip-plsql` indexes Oracle PL/SQL source files and writes a [SCIP](https://github.com/sourcegraph/scip) index for code navigation and analysis. It is an early-stage project: supported syntax is useful for real repositories, but the design's coverage and performance targets are not fully verified.
 
 ## Requirements
 
@@ -44,7 +44,8 @@ The output defaults to `index.scip` in the current directory. The parser uses `G
 - Loads an optional data dictionary snapshot with `--catalog` to provide external symbols for objects that are not present in the repository.
 - Represents database-link references as external SCIP symbols in a package specific to each link.
 - Preserves source offsets while preprocessing substitution variables and conditional compilation flags.
-- Handles SQL*Plus trailing-hyphen line continuations outside quoted strings and comments, and substitution-variable dot delimiters. As in SQL*Plus, a hyphen at the end of a line is treated as continuation rather than subtraction; move a subtraction operator to the next line. Continuations inside multiline literals remain unsupported.
+- Handles SQL*Plus trailing-hyphen continuations, including continued literal SQL passed to `EXECUTE IMMEDIATE`, and substitution-variable dot delimiters. As in SQL*Plus, a hyphen at the end of a line is treated as continuation rather than subtraction; move a subtraction operator to the next line. Static SQL literal values are not evaluated.
+- Parses a conservative subset of Oracle mining expressions with `USING *` or simple column lists, preserving surrounding references. Mining model names themselves are not resolved and produce a diagnostic; other mining forms may still degrade.
 - Reports parser and degraded-unit diagnostics in the SCIP index instead of stopping on the first malformed unit.
 - Supports source filters, schema selection, optional document caching, and parsing and memory metrics.
 
@@ -234,6 +235,10 @@ does not establish the result on the dedicated 16-core machine in the design;
 other compilation and test processes ran during that measurement.
 In the later isolated N3 run, the cold index completed in 149.7 seconds and
 the warm run exceeded the 150-second limit; both used four parser workers.
+After precalculating catalog fingerprints, a repeat with the same synthetic
+workload and worker count took 5.5 seconds cold, 4.9 seconds warm, and 4.8
+seconds after a one-file edit. It is a simple generated workload; these times
+do not establish the design target for real repositories.
 
 The `--cpu-profile` index option saves a Go CPU profile. For example, run a
 source twice with the same cache directory, setting a different profile path
@@ -243,12 +248,12 @@ in `corpus/baselines/`.
 
 ### PL/Scope reference smoke test
 
-The local PL/Scope comparison uses the pinned `BETWNSTR` function from
-`utPLSQL-demo-project`. Start a disposable Oracle Free container with a test
-user, build the integration-tagged indexer and comparison tool, and point
-`ORACLE_DSN` at the test user. The script creates/replaces `BETWNSTR` in that
-schema, enables PL/Scope, indexes the original source and writes identifiers and
-a comparison report:
+The local PL/Scope comparison uses the pinned `BETWNSTR`, `AWARD_BONUS` and
+`REMOVE_ROOMS_BY_NAME` objects from `utPLSQL-demo-project`. Start a disposable
+Oracle Free container with a clean test user, build the integration-tagged
+indexer and comparison tool, and point `ORACLE_DSN` at the test user. The script
+creates the three objects and their test tables in that schema, enables
+PL/Scope, indexes the original sources and writes a report for each object:
 
 ```sh
 docker run -d --rm --name oracle-test -p 127.0.0.1:1521:1521 \
@@ -269,8 +274,8 @@ positions point to the same SCIP symbol as its declaration. It reports built-in
 or otherwise undeclared signatures as `unanchored`; it does not establish the
 correctness of the declaration's target, compare access roles, or claim corpus
 accuracy. It accounts for Oracle removing `CREATE OR REPLACE` from the first
-stored source line. The initial one-function result is in
-`corpus/baselines/plscope-demo-local-2026-11-06.json`.
+stored source line. The three-object result is in
+`corpus/baselines/plscope-expanded-local-2026-11-06.json`.
 
 ## Current limitations
 
@@ -278,7 +283,7 @@ stored source line. The initial one-function result is in
 - Non-literal dynamic SQL and runtime-dependent SQL strings are not resolved.
 - The parser and resolver do not yet cover the full Oracle grammar or all PL/SQL name-resolution and overload rules.
 - The optional cache stores SCIP documents, but declarations and source units are still rebuilt on each run.
-- Source files, ASTs, and documents are not yet processed through a globally bounded streaming pipeline. The design's accuracy, memory, and throughput goals have not been benchmarked.
+- Source files, ASTs, and documents are not yet processed through a globally bounded streaming pipeline. Existing benchmarks and the small PL/Scope sample do not establish the design's accuracy, memory, and throughput targets for real workloads.
 - Liquibase changelog ordering is not implemented; Flyway versioned migrations are applied in numeric order for supported table alterations.
 - Some SCIP CLI versions reject valid SCIP constructs such as diagnostic-only occurrences or external-symbol relationships whose target is defined in the repository. Compatibility tests account for these known linter limitations.
 

@@ -43,6 +43,15 @@ func preprocess(text string, flags map[string]string) (string, []preprocessDiagn
 	}
 	diag := func(a, b int, msg string) { diagnostics = append(diagnostics, preprocessDiagnostic{a, b, msg}) }
 	for i := 0; i < len(text); {
+		// REM/REMARK lines are SQL*Plus comments. Apostrophes in them must
+		// not start a PL/SQL literal spanning subsequent statements.
+		if end, ok := sqlPlusRemark(text, i); ok {
+			if !active() {
+				mask(i, end)
+			}
+			i = end
+			continue
+		}
 		// Skip lexical islands before inspecting directives or substitutions.
 		if end, ok := lexicalIsland(text, i); ok {
 			if !active() {
@@ -175,6 +184,31 @@ func preprocess(text string, flags map[string]string) (string, []preprocessDiagn
 		diag(f.start, f.start+3, "$IF sin $END")
 	}
 	return string(out), diagnostics
+}
+
+func sqlPlusRemark(text string, i int) (int, bool) {
+	if i > 0 && text[i-1] != '\n' {
+		return 0, false
+	}
+	j := i
+	for j < len(text) && (text[j] == ' ' || text[j] == '\t') {
+		j++
+	}
+	start := j
+	for j < len(text) && (text[j] >= 'A' && text[j] <= 'Z' || text[j] >= 'a' && text[j] <= 'z') {
+		j++
+	}
+	word := strings.ToUpper(text[start:j])
+	if word != "REM" && word != "REMARK" {
+		return 0, false
+	}
+	if j < len(text) && text[j] != ' ' && text[j] != '\t' && text[j] != '\r' && text[j] != '\n' {
+		return 0, false
+	}
+	for j < len(text) && text[j] != '\n' {
+		j++
+	}
+	return j, true
 }
 func isSubName(c byte) bool {
 	return c == '_' || c == '$' || c == '#' || c >= '0' && c <= '9' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z'
