@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- Go 1.26.2
+- Go 1.27.0 or later
 - The Oracle driver is only needed for the optional `export-catalog` and `extract` commands.
 - The official `scip` CLI is optional and is used by some acceptance tests.
 

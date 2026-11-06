@@ -15,7 +15,7 @@ jobs:
           go-version-file: go.mod
           cache: true
       - name: Install official SCIP CLI
-        # SCIP v0.5.2's Sonic dependency does not link with Go 1.26.
+        # SCIP v0.5.2's Sonic dependency does not link with Go 1.26 or later.
         run: GOTOOLCHAIN=go1.23.12 go install github.com/sourcegraph/scip/cmd/scip@v0.5.2
       - name: Go and SCIP acceptance tests
         run: SCIP_BIN="$(go env GOPATH)/bin/scip" go test -count=1 ./...

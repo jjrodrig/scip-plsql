@@ -1,6 +1,6 @@
 module github.com/jjrodrig/plsql-scip
 
-go 1.26.2
+go 1.27.0
 
 require (
 	github.com/bytebase/omni v0.0.0-20261105191552-ec0bda1198e3
