@@ -16,6 +16,18 @@ dependencies retain their own licenses.
 
 ## Build and run
 
+Prebuilt binaries are available on the [GitHub Releases page](https://github.com/jjrodrig/scip-plsql/releases) for Linux, macOS, and Windows on amd64 and arm64. The release archives include Oracle support and a `checksums.txt` file is provided to verify the downloads.
+
+To publish a release, push a version tag such as `v1.0.0` to GitHub. The release workflow builds the archives and creates a GitHub release with generated notes; tags containing a hyphen are published as prereleases.
+
+Release archives and `checksums.txt` have signed GitHub artifact attestations. After downloading an archive, verify its integrity and build provenance with the [GitHub CLI](https://cli.github.com/):
+
+```sh
+gh attestation verify scip-plsql_v1.0.0_linux_amd64.tar.gz -R jjrodrig/scip-plsql
+```
+
+Use the name of the downloaded archive in place of the example. Verification retrieves the attestation from GitHub; the workflow uses Sigstore signing and does not require a long-lived signing key. Artifact attestations are available for public repositories on current GitHub plans; private repositories require GitHub Enterprise Cloud.
+
 Build the offline indexer:
 
 ```sh
@@ -85,6 +97,8 @@ The default build does not include a database driver and does not connect to Ora
 ```sh
 go build -tags integration -o scip-plsql ./cmd/scip-plsql
 ```
+
+The binaries published on GitHub Releases are built with this tag.
 
 Export a dictionary snapshot for use with `--catalog`:
 
