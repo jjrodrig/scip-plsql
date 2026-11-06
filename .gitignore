@@ -7,3 +7,6 @@
 
 # Optional local document cache
 /.scip-plsql-cache/
+
+# Local architecture notes
+/Indexador PL SQL → SCIP diseño de arquitectura.md
